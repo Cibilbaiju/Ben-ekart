@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { ShoppingCart, Search, Menu, X, User, Zap } from "lucide-react";
+import { useCartStore } from "@/store/cartStore";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
-  const cartItemCount = 3; // This would come from cart state management
+  const { totalItems } = useCartStore();
 
   const navLinks = [
     { path: "/", label: "Home" },
@@ -18,6 +20,14 @@ export const Header = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      console.log("Searching for:", searchQuery);
+      // Here you would typically navigate to a search results page
+    }
+  };
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
@@ -46,13 +56,15 @@ export const Header = () => {
 
             {/* Search bar - hidden on mobile */}
             <div className="hidden md:flex flex-1 max-w-md mx-8">
-              <div className="relative w-full">
+              <form onSubmit={handleSearch} className="relative w-full">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   placeholder="Search for appliances..."
                   className="pl-10 pr-4 py-2 w-full"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
-              </div>
+              </form>
             </div>
 
             {/* Right side icons */}
@@ -68,9 +80,9 @@ export const Header = () => {
                 <Button variant="ghost" size="sm" className="flex items-center space-x-1">
                   <ShoppingCart className="h-4 w-4" />
                   <span className="hidden md:block">Cart</span>
-                  {cartItemCount > 0 && (
+                  {totalItems > 0 && (
                     <Badge className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-                      {cartItemCount}
+                      {totalItems}
                     </Badge>
                   )}
                 </Button>
@@ -110,13 +122,15 @@ export const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             <div className="mb-4">
-              <div className="relative">
+              <form onSubmit={handleSearch} className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   placeholder="Search for appliances..."
                   className="pl-10 pr-4 py-2 w-full"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
-              </div>
+              </form>
             </div>
             <div className="space-y-2">
               {navLinks.map((link) => (
