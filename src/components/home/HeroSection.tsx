@@ -1,35 +1,135 @@
 
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import gsap from "gsap";
 
 export const HeroSection = () => {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
+  const buttonsRef = useRef<HTMLDivElement>(null);
+  const dealCardRef = useRef<HTMLDivElement>(null);
+  const floatingElementsRef = useRef<HTMLDivElement[]>([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Set initial states
+      gsap.set([titleRef.current, subtitleRef.current, buttonsRef.current], { 
+        opacity: 0, 
+        y: 50 
+      });
+      gsap.set(badgeRef.current, { 
+        opacity: 0, 
+        scale: 0.8 
+      });
+      gsap.set(dealCardRef.current, { 
+        opacity: 0, 
+        scale: 0.9,
+        rotation: -5 
+      });
+      gsap.set(floatingElementsRef.current, { 
+        opacity: 0, 
+        scale: 0 
+      });
+
+      // Create timeline
+      const tl = gsap.timeline({ delay: 0.2 });
+
+      // Animate elements in sequence
+      tl.to(badgeRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        ease: "back.out(1.7)"
+      })
+      .to(titleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      }, "-=0.3")
+      .to(subtitleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out"
+      }, "-=0.4")
+      .to(buttonsRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out"
+      }, "-=0.3")
+      .to(dealCardRef.current, {
+        opacity: 1,
+        scale: 1,
+        rotation: 0,
+        duration: 0.8,
+        ease: "elastic.out(1, 0.5)"
+      }, "-=0.5")
+      .to(floatingElementsRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.5,
+        stagger: 0.2,
+        ease: "back.out(1.7)"
+      }, "-=0.3");
+
+      // Floating animation for floating elements
+      gsap.to(floatingElementsRef.current, {
+        y: -10,
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "power2.inOut",
+        stagger: 0.3
+      });
+
+      // Hover animations for buttons
+      const buttons = buttonsRef.current?.querySelectorAll('button');
+      buttons?.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+          gsap.to(button, { scale: 1.05, duration: 0.3, ease: "power2.out" });
+        });
+        button.addEventListener('mouseleave', () => {
+          gsap.to(button, { scale: 1, duration: 0.3, ease: "power2.out" });
+        });
+      });
+
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800 text-white overflow-hidden">
+    <section ref={heroRef} className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800 text-white overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.05%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
       
       <div className="container mx-auto px-4 py-20 md:py-28 relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
-            <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+            <div ref={badgeRef} className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
               <Sparkles className="h-4 w-4 text-yellow-300" />
               <span className="text-sm font-medium">Premium Quality Guaranteed</span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <h1 ref={titleRef} className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               Premium Home
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">
                 Appliances
               </span>
             </h1>
             
-            <p className="text-xl mb-8 text-blue-100 leading-relaxed max-w-xl">
+            <p ref={subtitleRef} className="text-xl mb-8 text-blue-100 leading-relaxed max-w-xl">
               Discover our exclusive collection of energy-efficient, smart home appliances. 
               Transform your home with cutting-edge technology and modern design.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+            <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
                 Shop Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -40,7 +140,7 @@ export const HeroSection = () => {
           </div>
           
           <div className="relative">
-            <div className="relative bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/20">
+            <div ref={dealCardRef} className="relative bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/20">
               <div className="absolute -top-4 -right-4 bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl p-3 shadow-lg">
                 <span className="text-white font-bold text-sm">HOT DEAL!</span>
               </div>
@@ -57,8 +157,8 @@ export const HeroSection = () => {
             </div>
             
             {/* Floating elements */}
-            <div className="absolute -top-6 -left-6 w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-70 animate-pulse"></div>
-            <div className="absolute -bottom-4 -right-8 w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full opacity-60 animate-pulse" style={{animationDelay: '1s'}}></div>
+            <div ref={(el) => el && (floatingElementsRef.current[0] = el)} className="absolute -top-6 -left-6 w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-70"></div>
+            <div ref={(el) => el && (floatingElementsRef.current[1] = el)} className="absolute -bottom-4 -right-8 w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full opacity-60"></div>
           </div>
         </div>
       </div>

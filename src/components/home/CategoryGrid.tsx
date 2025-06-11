@@ -1,6 +1,11 @@
 
+import { useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tv, Waves, Refrigerator, Microwave, Wind } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const categories = [
   {
@@ -41,10 +46,90 @@ const categories = [
 ];
 
 export const CategoryGrid = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement[]>([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Set initial states
+      gsap.set(titleRef.current, { opacity: 0, y: 50 });
+      gsap.set(cardsRef.current, { opacity: 0, y: 60, scale: 0.8 });
+
+      // Title animation
+      gsap.to(titleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top 80%",
+          end: "bottom 20%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      // Cards animation with stagger
+      gsap.to(cardsRef.current, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "back.out(1.2)",
+        scrollTrigger: {
+          trigger: cardsRef.current[0],
+          start: "top 85%",
+          end: "bottom 15%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      // Hover animations for cards
+      cardsRef.current.forEach((card, index) => {
+        if (card) {
+          const icon = card.querySelector('.category-icon');
+          
+          card.addEventListener('mouseenter', () => {
+            gsap.to(card, {
+              y: -10,
+              scale: 1.05,
+              duration: 0.3,
+              ease: "power2.out"
+            });
+            gsap.to(icon, {
+              rotation: 360,
+              duration: 0.6,
+              ease: "power2.out"
+            });
+          });
+
+          card.addEventListener('mouseleave', () => {
+            gsap.to(card, {
+              y: 0,
+              scale: 1,
+              duration: 0.3,
+              ease: "power2.out"
+            });
+            gsap.to(icon, {
+              rotation: 0,
+              duration: 0.3,
+              ease: "power2.out"
+            });
+          });
+        }
+      });
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <section ref={sectionRef} className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div ref={titleRef} className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Shop by Category
           </h2>
@@ -54,15 +139,19 @@ export const CategoryGrid = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {categories.map((category) => (
-            <Card key={category.name} className="group cursor-pointer hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-0 shadow-lg overflow-hidden">
+          {categories.map((category, index) => (
+            <Card 
+              key={category.name} 
+              ref={(el) => el && (cardsRef.current[index] = el)}
+              className="group cursor-pointer border-0 shadow-lg overflow-hidden"
+            >
               <CardContent className="p-8 text-center relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-50 opacity-90"></div>
                 <div className="relative z-10">
-                  <div className={`bg-gradient-to-br ${category.color} group-hover:bg-gradient-to-br group-hover:${category.hoverColor} rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-300 shadow-lg`}>
+                  <div className={`category-icon bg-gradient-to-br ${category.color} rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg`}>
                     <category.icon className="h-10 w-10 text-white" />
                   </div>
-                  <h3 className="font-bold text-gray-900 mb-3 text-lg group-hover:text-blue-600 transition-colors">{category.name}</h3>
+                  <h3 className="font-bold text-gray-900 mb-3 text-lg">{category.name}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">{category.description}</p>
                 </div>
               </CardContent>
