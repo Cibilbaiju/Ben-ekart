@@ -161,9 +161,9 @@ export const ProductCard = ({
           {/* Price */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-blue-600">${price}</span>
+              <span className="text-2xl font-bold text-blue-600">₹{price.toLocaleString()}</span>
               {originalPrice && (
-                <span className="text-lg text-gray-500 line-through">${originalPrice}</span>
+                <span className="text-lg text-gray-500 line-through">₹{originalPrice.toLocaleString()}</span>
               )}
             </div>
           </div>

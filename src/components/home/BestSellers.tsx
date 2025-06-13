@@ -8,40 +8,44 @@ gsap.registerPlugin(ScrollTrigger);
 
 const bestSellers = [
   {
-    id: 1,
+    id: "1",
     name: "Samsung 65\" 4K Smart TV",
-    price: 899,
-    originalPrice: 1299,
-    image: "/placeholder.svg",
+    price: 74999,
+    originalPrice: 109999,
+    image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=400&h=300&fit=crop",
     rating: 4.8,
     reviews: 234,
+    category: "Television"
   },
   {
-    id: 2,
+    id: "2",
     name: "LG Front Load Washing Machine",
-    price: 649,
-    originalPrice: 799,
-    image: "/placeholder.svg",
+    price: 54999,
+    originalPrice: 67999,
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop",
     rating: 4.6,
     reviews: 189,
+    category: "Washing Machine"
   },
   {
-    id: 3,
+    id: "3",
     name: "Whirlpool French Door Refrigerator",
-    price: 1299,
-    originalPrice: 1599,
-    image: "/placeholder.svg",
+    price: 109999,
+    originalPrice: 135999,
+    image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop",
     rating: 4.7,
     reviews: 156,
+    category: "Refrigerator"
   },
   {
-    id: 4,
+    id: "4",
     name: "Panasonic Inverter Microwave",
-    price: 299,
-    originalPrice: 399,
-    image: "/placeholder.svg",
+    price: 25999,
+    originalPrice: 33999,
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=300&fit=crop",
     rating: 4.5,
     reviews: 298,
+    category: "Microwave"
   },
 ];
 
@@ -109,7 +113,16 @@ export const BestSellers = () => {
               key={product.id}
               ref={(el) => el && (productsRef.current[index] = el)}
             >
-              <ProductCard product={product} />
+              <ProductCard 
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                originalPrice={product.originalPrice}
+                image={product.image}
+                rating={product.rating}
+                reviews={product.reviews}
+                category={product.category}
+              />
             </div>
           ))}
         </div>
