@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useCartStore } from "@/store/cartStore";
 import { useToast } from "@/hooks/use-toast";
-import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft, Star } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft, Star, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
@@ -30,13 +30,6 @@ const Cart = () => {
     toast({
       title: "Cart Cleared",
       description: "All items have been removed from your cart.",
-    });
-  };
-
-  const handleCheckout = () => {
-    toast({
-      title: "Checkout",
-      description: "Proceeding to secure checkout...",
     });
   };
 
@@ -191,12 +184,12 @@ const Cart = () => {
                   <span>Total</span>
                   <span className="text-blue-600">₹{finalTotal.toLocaleString()}</span>
                 </div>
-                <Button
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
-                  onClick={handleCheckout}
-                >
-                  Proceed to Checkout
-                </Button>
+                <Link to="/checkout">
+                  <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+                    <ShoppingCart className="h-5 w-5 mr-2" />
+                    Proceed to Checkout
+                  </Button>
+                </Link>
                 <Link to="/" className="block">
                   <Button variant="outline" className="w-full py-3 hover:bg-gray-50">
                     <ArrowLeft className="h-4 w-4 mr-2" />

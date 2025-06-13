@@ -9,6 +9,8 @@ import { Footer } from "@/components/Footer";
 import { Chatbot } from "@/components/Chatbot";
 import Index from "./pages/Index";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import OrderConfirmation from "./pages/OrderConfirmation";
 import Contact from "./pages/Contact";
 import Account from "./pages/Account";
 import Offers from "./pages/Offers";
@@ -28,6 +30,8 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/order-confirmation" element={<OrderConfirmation />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/account" element={<Account />} />
               <Route path="/offers" element={<Offers />} />
