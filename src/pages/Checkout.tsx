@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useCartStore } from "@/store/cartStore";
 import { useToast } from "@/hooks/use-toast";
-import { MapPin, Truck, CreditCard, Shield, ArrowLeft } from "lucide-react";
+import { MapPin, Truck, CreditCard, Shield, ArrowLeft, Store } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Checkout = () => {
@@ -18,6 +17,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   
   const [currentStep, setCurrentStep] = useState(1);
+  const [deliveryOption, setDeliveryOption] = useState("delivery");
   const [formData, setFormData] = useState({
     // Personal Info
     firstName: "",
@@ -25,12 +25,15 @@ const Checkout = () => {
     email: "",
     phone: "",
     
-    // Address
+    // Address (only for delivery)
     address: "",
     landmark: "",
     city: "",
     state: "",
     pincode: "",
+    
+    // Store pickup
+    selectedStore: "",
     
     // Payment
     paymentMethod: "card",
@@ -39,7 +42,13 @@ const Checkout = () => {
   const [pincodeValid, setPincodeValid] = useState<boolean | null>(null);
   const [deliveryDate, setDeliveryDate] = useState<string>("");
 
-  const deliveryCharge = totalPrice > 50000 ? 0 : 999;
+  const stores = [
+    { id: "mumbai-1", name: "BEN Store - Bandra", address: "Shop 15, Linking Road, Bandra West, Mumbai" },
+    { id: "delhi-1", name: "BEN Store - CP", address: "Block A, Connaught Place, New Delhi" },
+    { id: "bangalore-1", name: "BEN Store - Koramangala", address: "80 Feet Road, Koramangala 4th Block, Bangalore" }
+  ];
+
+  const deliveryCharge = deliveryOption === "pickup" ? 0 : (totalPrice > 50000 ? 0 : 999);
   const tax = totalPrice * 0.18;
   const finalTotal = totalPrice + deliveryCharge + tax;
 
@@ -67,6 +76,16 @@ const Checkout = () => {
     }
   };
 
+  const handleDeliveryOptionChange = (option: string) => {
+    setDeliveryOption(option);
+    if (option === "pickup") {
+      // Set pickup date (usually same day or next day)
+      const pickupDate = new Date();
+      pickupDate.setDate(pickupDate.getDate() + 1);
+      setDeliveryDate(pickupDate.toDateString());
+    }
+  };
+
   const handleStepNext = () => {
     if (currentStep < 3) setCurrentStep(currentStep + 1);
   };
@@ -77,9 +96,13 @@ const Checkout = () => {
 
   const handlePlaceOrder = () => {
     // Simulate order placement
+    const message = deliveryOption === "pickup" 
+      ? `Your order will be ready for pickup by ${deliveryDate}`
+      : `Your order will be delivered by ${deliveryDate}`;
+    
     toast({
       title: "Order Placed Successfully! 🎉",
-      description: `Your order will be delivered by ${deliveryDate}`,
+      description: message,
     });
     
     clearCart();
@@ -136,132 +159,223 @@ const Checkout = () => {
             {currentStep === 1 && (
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <MapPin className="h-5 w-5 mr-2" />
-                    Delivery Information
-                  </CardTitle>
+                  <CardTitle>Delivery Option</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="firstName">First Name *</Label>
-                      <Input
-                        id="firstName"
-                        value={formData.firstName}
-                        onChange={(e) => handleInputChange("firstName", e.target.value)}
-                        required
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="lastName">Last Name *</Label>
-                      <Input
-                        id="lastName"
-                        value={formData.lastName}
-                        onChange={(e) => handleInputChange("lastName", e.target.value)}
-                        required
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="email">Email *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => handleInputChange("email", e.target.value)}
-                        required
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="phone">Phone Number *</Label>
-                      <Input
-                        id="phone"
-                        value={formData.phone}
-                        onChange={(e) => handleInputChange("phone", e.target.value)}
-                        required
-                      />
+                <CardContent className="space-y-6">
+                  {/* Delivery Option Selection */}
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <label className={`flex items-center space-x-3 p-4 border-2 rounded-lg cursor-pointer hover:bg-gray-50 ${
+                        deliveryOption === "delivery" ? "border-blue-500 bg-blue-50" : "border-gray-200"
+                      }`}>
+                        <input
+                          type="radio"
+                          name="deliveryOption"
+                          value="delivery"
+                          checked={deliveryOption === "delivery"}
+                          onChange={(e) => handleDeliveryOptionChange(e.target.value)}
+                        />
+                        <Truck className="h-5 w-5 text-blue-600" />
+                        <div>
+                          <span className="font-medium">Home Delivery</span>
+                          <p className="text-sm text-gray-600">Get it delivered to your doorstep</p>
+                        </div>
+                      </label>
+                      
+                      <label className={`flex items-center space-x-3 p-4 border-2 rounded-lg cursor-pointer hover:bg-gray-50 ${
+                        deliveryOption === "pickup" ? "border-blue-500 bg-blue-50" : "border-gray-200"
+                      }`}>
+                        <input
+                          type="radio"
+                          name="deliveryOption"
+                          value="pickup"
+                          checked={deliveryOption === "pickup"}
+                          onChange={(e) => handleDeliveryOptionChange(e.target.value)}
+                        />
+                        <Store className="h-5 w-5 text-green-600" />
+                        <div>
+                          <span className="font-medium">Store Pickup</span>
+                          <p className="text-sm text-gray-600">Pick up from our store - No delivery charges!</p>
+                        </div>
+                      </label>
                     </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="address">Address *</Label>
-                    <Input
-                      id="address"
-                      value={formData.address}
-                      onChange={(e) => handleInputChange("address", e.target.value)}
-                      placeholder="House No, Building, Street, Area"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="landmark">Landmark</Label>
-                    <Input
-                      id="landmark"
-                      value={formData.landmark}
-                      onChange={(e) => handleInputChange("landmark", e.target.value)}
-                      placeholder="Near a landmark (Optional)"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <Label htmlFor="city">City *</Label>
-                      <Input
-                        id="city"
-                        value={formData.city}
-                        onChange={(e) => handleInputChange("city", e.target.value)}
-                        required
-                      />
+                  {/* Personal Information */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold flex items-center">
+                      <User className="h-5 w-5 mr-2" />
+                      Personal Information
+                    </h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="firstName">First Name *</Label>
+                        <Input
+                          id="firstName"
+                          value={formData.firstName}
+                          onChange={(e) => handleInputChange("firstName", e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="lastName">Last Name *</Label>
+                        <Input
+                          id="lastName"
+                          value={formData.lastName}
+                          onChange={(e) => handleInputChange("lastName", e.target.value)}
+                          required
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <Label htmlFor="state">State *</Label>
-                      <Select onValueChange={(value) => handleInputChange("state", value)}>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="email">Email *</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => handleInputChange("email", e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="phone">Phone Number *</Label>
+                        <Input
+                          id="phone"
+                          value={formData.phone}
+                          onChange={(e) => handleInputChange("phone", e.target.value)}
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Store Selection for Pickup */}
+                  {deliveryOption === "pickup" && (
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold flex items-center">
+                        <Store className="h-5 w-5 mr-2" />
+                        Select Store
+                      </h3>
+                      <Select onValueChange={(value) => handleInputChange("selectedStore", value)}>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select State" />
+                          <SelectValue placeholder="Choose a store for pickup" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="delhi">Delhi</SelectItem>
-                          <SelectItem value="mumbai">Maharashtra</SelectItem>
-                          <SelectItem value="bangalore">Karnataka</SelectItem>
-                          <SelectItem value="chennai">Tamil Nadu</SelectItem>
-                          <SelectItem value="kolkata">West Bengal</SelectItem>
-                          <SelectItem value="hyderabad">Telangana</SelectItem>
-                          <SelectItem value="pune">Maharashtra</SelectItem>
-                          <SelectItem value="ahmedabad">Gujarat</SelectItem>
+                          {stores.map((store) => (
+                            <SelectItem key={store.id} value={store.id}>
+                              <div>
+                                <div className="font-medium">{store.name}</div>
+                                <div className="text-sm text-gray-600">{store.address}</div>
+                              </div>
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
-                    </div>
-                    <div>
-                      <Label htmlFor="pincode">Pincode *</Label>
-                      <Input
-                        id="pincode"
-                        value={formData.pincode}
-                        onChange={(e) => handleInputChange("pincode", e.target.value)}
-                        placeholder="6 digits"
-                        maxLength={6}
-                        required
-                      />
-                      {pincodeValid === true && (
-                        <Badge className="mt-2 bg-green-100 text-green-800">
-                          <Truck className="h-3 w-3 mr-1" />
-                          Delivery available by {deliveryDate}
-                        </Badge>
-                      )}
-                      {pincodeValid === false && (
-                        <Badge variant="destructive" className="mt-2">
-                          Delivery not available to this pincode
+                      {formData.selectedStore && (
+                        <Badge className="bg-green-100 text-green-800">
+                          <Store className="h-3 w-3 mr-1" />
+                          Ready for pickup by {deliveryDate}
                         </Badge>
                       )}
                     </div>
-                  </div>
+                  )}
+
+                  {/* Delivery Address for Home Delivery */}
+                  {deliveryOption === "delivery" && (
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold flex items-center">
+                        <MapPin className="h-5 w-5 mr-2" />
+                        Delivery Address
+                      </h3>
+                      
+                      <div>
+                        <Label htmlFor="address">Address *</Label>
+                        <Input
+                          id="address"
+                          value={formData.address}
+                          onChange={(e) => handleInputChange("address", e.target.value)}
+                          placeholder="House No, Building, Street, Area"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor="landmark">Landmark</Label>
+                        <Input
+                          id="landmark"
+                          value={formData.landmark}
+                          onChange={(e) => handleInputChange("landmark", e.target.value)}
+                          placeholder="Near a landmark (Optional)"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-4">
+                        <div>
+                          <Label htmlFor="city">City *</Label>
+                          <Input
+                            id="city"
+                            value={formData.city}
+                            onChange={(e) => handleInputChange("city", e.target.value)}
+                            required
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="state">State *</Label>
+                          <Select onValueChange={(value) => handleInputChange("state", value)}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select State" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="delhi">Delhi</SelectItem>
+                              <SelectItem value="mumbai">Maharashtra</SelectItem>
+                              <SelectItem value="bangalore">Karnataka</SelectItem>
+                              <SelectItem value="chennai">Tamil Nadu</SelectItem>
+                              <SelectItem value="kolkata">West Bengal</SelectItem>
+                              <SelectItem value="hyderabad">Telangana</SelectItem>
+                              <SelectItem value="pune">Maharashtra</SelectItem>
+                              <SelectItem value="ahmedabad">Gujarat</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
+                          <Label htmlFor="pincode">Pincode *</Label>
+                          <Input
+                            id="pincode"
+                            value={formData.pincode}
+                            onChange={(e) => handleInputChange("pincode", e.target.value)}
+                            placeholder="6 digits"
+                            maxLength={6}
+                            required
+                          />
+                          {pincodeValid === true && (
+                            <Badge className="mt-2 bg-green-100 text-green-800">
+                              <Truck className="h-3 w-3 mr-1" />
+                              Delivery available by {deliveryDate}
+                            </Badge>
+                          )}
+                          {pincodeValid === false && (
+                            <Badge variant="destructive" className="mt-2">
+                              Delivery not available to this pincode
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <Button 
                     onClick={handleStepNext} 
                     className="w-full mt-6"
-                    disabled={!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.address || !formData.city || !formData.state || !formData.pincode || pincodeValid !== true}
+                    disabled={
+                      !formData.firstName || 
+                      !formData.lastName || 
+                      !formData.email || 
+                      !formData.phone || 
+                      (deliveryOption === "delivery" && (!formData.address || !formData.city || !formData.state || !formData.pincode || pincodeValid !== true)) ||
+                      (deliveryOption === "pickup" && !formData.selectedStore)
+                    }
                   >
                     Continue to Payment
                   </Button>
@@ -340,12 +454,27 @@ const Checkout = () => {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <h3 className="font-semibold mb-2">Delivery Address</h3>
+                    <h3 className="font-semibold mb-2">
+                      {deliveryOption === "pickup" ? "Pickup Details" : "Delivery Address"}
+                    </h3>
                     <div className="p-4 bg-gray-50 rounded-lg">
                       <p className="font-medium">{formData.firstName} {formData.lastName}</p>
-                      <p>{formData.address}</p>
-                      {formData.landmark && <p>Near {formData.landmark}</p>}
-                      <p>{formData.city}, {formData.state} - {formData.pincode}</p>
+                      {deliveryOption === "pickup" ? (
+                        <div>
+                          {stores.find(store => store.id === formData.selectedStore) && (
+                            <div>
+                              <p className="font-medium">{stores.find(store => store.id === formData.selectedStore)?.name}</p>
+                              <p>{stores.find(store => store.id === formData.selectedStore)?.address}</p>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div>
+                          <p>{formData.address}</p>
+                          {formData.landmark && <p>Near {formData.landmark}</p>}
+                          <p>{formData.city}, {formData.state} - {formData.pincode}</p>
+                        </div>
+                      )}
                       <p>{formData.phone}</p>
                     </div>
                   </div>
@@ -358,7 +487,9 @@ const Checkout = () => {
                   </div>
 
                   <div>
-                    <h3 className="font-semibold mb-2">Expected Delivery</h3>
+                    <h3 className="font-semibold mb-2">
+                      {deliveryOption === "pickup" ? "Expected Pickup" : "Expected Delivery"}
+                    </h3>
                     <div className="p-4 bg-green-50 rounded-lg">
                       <p className="text-green-800 font-medium">{deliveryDate}</p>
                     </div>
@@ -404,7 +535,7 @@ const Checkout = () => {
                     <span>₹{totalPrice.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Delivery</span>
+                    <span>{deliveryOption === "pickup" ? "Pickup" : "Delivery"}</span>
                     <span className={deliveryCharge === 0 ? "text-green-600" : ""}>
                       {deliveryCharge === 0 ? "FREE" : `₹${deliveryCharge.toLocaleString()}`}
                     </span>
