@@ -37,13 +37,16 @@ export const ProductCard = ({
   const addItem = useCartStore((state) => state.addItem);
   const { toast } = useToast();
 
-  const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
+  // Safely handle price calculations
+  const safePrice = typeof price === 'number' ? price : 0;
+  const safeOriginalPrice = typeof originalPrice === 'number' ? originalPrice : null;
+  const discount = safeOriginalPrice && safePrice ? Math.round(((safeOriginalPrice - safePrice) / safeOriginalPrice) * 100) : 0;
 
   const handleAddToCart = () => {
     addItem({
       id,
       name,
-      price,
+      price: safePrice,
       image,
       category
     });
@@ -161,9 +164,9 @@ export const ProductCard = ({
           {/* Price */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-blue-600">₹{price.toLocaleString()}</span>
-              {originalPrice && (
-                <span className="text-lg text-gray-500 line-through">₹{originalPrice.toLocaleString()}</span>
+              <span className="text-2xl font-bold text-blue-600">₹{safePrice.toLocaleString()}</span>
+              {safeOriginalPrice && (
+                <span className="text-lg text-gray-500 line-through">₹{safeOriginalPrice.toLocaleString()}</span>
               )}
             </div>
           </div>
