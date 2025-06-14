@@ -129,13 +129,13 @@ export const WhyChooseUs = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gradient-to-b from-white to-gray-50">
+    <section ref={sectionRef} className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div ref={titleRef} className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Why Choose HomeHaven?
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             We're committed to providing exceptional service and premium quality products that exceed your expectations
           </p>
         </div>
@@ -145,16 +145,16 @@ export const WhyChooseUs = () => {
             <Card 
               key={feature.title} 
               ref={(el) => el && (featuresRef.current[index] = el)}
-              className="text-center border-0 shadow-lg overflow-hidden group cursor-pointer"
+              className="text-center border-0 shadow-lg overflow-hidden group cursor-pointer bg-muted"
             >
               <CardContent className="p-8 relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-50/50 opacity-90"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-muted to-background/50 opacity-90"></div>
                 <div className="feature-content relative z-10">
                   <div className={`feature-icon bg-gradient-to-br ${feature.color} rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg`}>
                     <feature.icon className="h-10 w-10 text-white" />
                   </div>
-                  <h3 className="font-bold text-gray-900 mb-4 text-xl">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                  <h3 className="font-bold text-foreground mb-4 text-xl">{feature.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
                 </div>
               </CardContent>
             </Card>

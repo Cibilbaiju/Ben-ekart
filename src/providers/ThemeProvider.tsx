@@ -6,13 +6,23 @@ import { ThemeProvider as NextThemesProvider } from "next-themes"
 
 interface ThemeProviderProps {
   children: React.ReactNode
-  attribute?: "class" | "style" | Array<"class" | "style">
+  attribute?: "class"
   defaultTheme?: string
   enableSystem?: boolean
   disableTransitionOnChange?: boolean
 }
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  // always use attribute="class" for next-themes compatibility with tailwind
-  return <NextThemesProvider attribute="class" {...props}>{children}</NextThemesProvider>
+  // Force dark mode at all times, prevent other themes
+  return (
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="dark"
+      enableSystem={false}
+      disableTransitionOnChange={true}
+      {...props}
+    >
+      {children}
+    </NextThemesProvider>
+  );
 }

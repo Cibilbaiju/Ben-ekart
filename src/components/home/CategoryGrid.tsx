@@ -127,13 +127,13 @@ export const CategoryGrid = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <section ref={sectionRef} className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div ref={titleRef} className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Shop by Category
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Explore our extensive range of premium home appliances designed to make your life easier and more comfortable
           </p>
         </div>
@@ -143,16 +143,16 @@ export const CategoryGrid = () => {
             <Card 
               key={category.name} 
               ref={(el) => el && (cardsRef.current[index] = el)}
-              className="group cursor-pointer border-0 shadow-lg overflow-hidden"
+              className="group cursor-pointer border-0 shadow-lg overflow-hidden bg-muted"
             >
               <CardContent className="p-8 text-center relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-50 opacity-90"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-muted to-background opacity-90"></div>
                 <div className="relative z-10">
                   <div className={`category-icon bg-gradient-to-br ${category.color} rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg`}>
                     <category.icon className="h-10 w-10 text-white" />
                   </div>
-                  <h3 className="font-bold text-gray-900 mb-3 text-lg">{category.name}</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">{category.description}</p>
+                  <h3 className="font-bold text-foreground mb-3 text-lg">{category.name}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{category.description}</p>
                 </div>
               </CardContent>
             </Card>
