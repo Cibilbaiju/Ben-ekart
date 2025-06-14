@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -145,7 +144,7 @@ const Offers = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gray-900 text-gray-100">
       {/* Hero Section */}
       <section ref={heroRef} className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 text-white py-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -210,14 +209,14 @@ const Offers = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <Card 
               ref={(el) => el && (categoriesRef.current[0] = el)}
-              className="text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur-sm"
+              className="text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 bg-gray-800/80 backdrop-blur-sm"
             >
               <CardContent className="p-6">
-                <div className="bg-gradient-to-br from-blue-100 to-blue-200 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <Percent className="h-8 w-8 text-blue-600" />
+                <div className="bg-gradient-to-br from-blue-900 to-blue-800 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <Percent className="h-8 w-8 text-blue-400" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Seasonal Sale</h3>
-                <p className="text-gray-600 mb-4">Up to 40% off on winter appliances</p>
+                <h3 className="text-xl font-semibold mb-2 text-white">Seasonal Sale</h3>
+                <p className="text-gray-400 mb-4">Up to 40% off on winter appliances</p>
                 <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg">
                   Shop Now
                 </Button>
@@ -226,14 +225,14 @@ const Offers = () => {
 
             <Card 
               ref={(el) => el && (categoriesRef.current[1] = el)}
-              className="text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur-sm"
+              className="text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 bg-gray-800/80 backdrop-blur-sm"
             >
               <CardContent className="p-6">
-                <div className="bg-gradient-to-br from-green-100 to-green-200 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <Gift className="h-8 w-8 text-green-600" />
+                <div className="bg-gradient-to-br from-green-900 to-green-800 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <Gift className="h-8 w-8 text-green-400" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Bundle Deals</h3>
-                <p className="text-gray-600 mb-4">Save more when you buy together</p>
+                <h3 className="text-xl font-semibold mb-2 text-white">Bundle Deals</h3>
+                <p className="text-gray-400 mb-4">Save more when you buy together</p>
                 <Button className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 shadow-lg">
                   View Bundles
                 </Button>
@@ -242,14 +241,14 @@ const Offers = () => {
 
             <Card 
               ref={(el) => el && (categoriesRef.current[2] = el)}
-              className="text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur-sm"
+              className="text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 bg-gray-800/80 backdrop-blur-sm"
             >
               <CardContent className="p-6">
-                <div className="bg-gradient-to-br from-orange-100 to-orange-200 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <Timer className="h-8 w-8 text-orange-600" />
+                <div className="bg-gradient-to-br from-orange-900 to-orange-800 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <Timer className="h-8 w-8 text-orange-400" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Limited Time</h3>
-                <p className="text-gray-600 mb-4">Exclusive deals ending soon</p>
+                <h3 className="text-xl font-semibold mb-2 text-white">Limited Time</h3>
+                <p className="text-gray-400 mb-4">Exclusive deals ending soon</p>
                 <Button className="bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 shadow-lg">
                   Grab Now
                 </Button>
@@ -260,13 +259,13 @@ const Offers = () => {
       </section>
 
       {/* Featured Offers */}
-      <section className="py-12 bg-white/50 backdrop-blur-sm">
+      <section className="py-12 bg-gray-900/50 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               Featured Offers
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-gray-400">
               Hand-picked deals with the biggest savings
             </p>
           </div>

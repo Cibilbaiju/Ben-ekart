@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Home, Tv, Waves, Refrigerator, Microwave, Wind, Offers, User, ShoppingCart } from "lucide-react";
+import { Home, Tv, Waves, Refrigerator, Microwave, Wind, Ticket, User, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const items = [
@@ -19,7 +19,7 @@ const items = [
   { title: "Refrigerators", url: "#", icon: Refrigerator },
   { title: "Microwaves", url: "#", icon: Microwave },
   { title: "Air Conditioners", url: "#", icon: Wind },
-  { title: "Offers", url: "/offers", icon: Offers },
+  { title: "Offers", url: "/offers", icon: Ticket },
   { title: "Account", url: "/account", icon: User },
   { title: "Cart", url: "/cart", icon: ShoppingCart },
 ];
