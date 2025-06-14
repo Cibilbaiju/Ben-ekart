@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -53,19 +52,19 @@ const Account = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center py-12">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-800 flex items-center justify-center py-12">
         <div className="container mx-auto px-4 max-w-md">
-          <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+          <Card className="shadow-2xl border-0 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/90 backdrop-blur-sm">
             <CardHeader className="text-center">
-              <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <div className="bg-gradient-to-br from-blue-800 to-purple-900 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg border border-white/10">
                 <User className="h-8 w-8 text-white" />
               </div>
-              <CardTitle className="text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <CardTitle className="text-2xl bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 {isLogin ? "Welcome Back" : "Create Account"}
               </CardTitle>
-              <p className="text-gray-600">
-                {isLogin 
-                  ? "Sign in to your account to continue" 
+              <p className="text-gray-400">
+                {isLogin
+                  ? "Sign in to your account to continue"
                   : "Join HomeHaven for exclusive offers and faster checkout"
                 }
               </p>
@@ -76,28 +75,27 @@ const Account = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" placeholder="John" className="border-gray-200 focus:border-blue-500" />
+                      <Input id="firstName" placeholder="John" className="border-gray-700 bg-gray-900 text-gray-100" />
                     </div>
                     <div>
                       <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" placeholder="Doe" className="border-gray-200 focus:border-blue-500" />
+                      <Input id="lastName" placeholder="Doe" className="border-gray-700 bg-gray-900 text-gray-100" />
                     </div>
                   </div>
                 )}
-                
+
                 <div>
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" className="border-gray-200 focus:border-blue-500" />
+                  <Input id="email" type="email" placeholder="john@example.com" className="border-gray-700 bg-gray-900 text-gray-100" />
                 </div>
-                
                 <div>
                   <Label htmlFor="password">Password</Label>
                   <div className="relative">
-                    <Input 
-                      id="password" 
-                      type={showPassword ? "text" : "password"} 
-                      placeholder="Enter your password" 
-                      className="border-gray-200 focus:border-blue-500 pr-10"
+                    <Input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter your password"
+                      className="border-gray-700 bg-gray-900 text-gray-100 pr-10"
                     />
                     <Button
                       type="button"
@@ -107,28 +105,26 @@ const Account = () => {
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? (
-                        <EyeOff className="h-4 w-4 text-gray-400" />
+                        <EyeOff className="h-4 w-4 text-gray-500" />
                       ) : (
-                        <Eye className="h-4 w-4 text-gray-400" />
+                        <Eye className="h-4 w-4 text-gray-500" />
                       )}
                     </Button>
                   </div>
                 </div>
-                
-                <Button 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
+                <Button
+                  className="w-full bg-gradient-to-r from-blue-800 to-purple-900 hover:from-blue-900 hover:to-purple-950 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all text-white"
                   onClick={() => setIsLoggedIn(true)}
                 >
                   {isLogin ? "Sign In" : "Create Account"}
                 </Button>
               </form>
-              
               <div className="mt-6 text-center">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-400">
                   {isLogin ? "Don't have an account?" : "Already have an account?"}
                   <Button
                     variant="link"
-                    className="p-0 ml-1 text-blue-600 hover:text-purple-600"
+                    className="p-0 ml-1 text-blue-400 hover:text-purple-400"
                     onClick={() => setIsLogin(!isLogin)}
                   >
                     {isLogin ? "Sign up" : "Sign in"}
@@ -143,21 +139,21 @@ const Account = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-800">
       {/* Header */}
-      <section className="bg-white border-b shadow-sm">
+      <section className="bg-gradient-to-r from-gray-900 to-gray-800 border-b border-gray-800 shadow-sm">
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text">
                 My Account
               </h1>
-              <p className="text-gray-600">Welcome back, John Doe!</p>
+              <p className="text-gray-400">Welcome back, John Doe!</p>
             </div>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => setIsLoggedIn(false)}
-              className="flex items-center space-x-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600"
+              className="flex items-center space-x-2 hover:bg-red-950 border border-gray-800 text-gray-200 hover:text-red-400"
             >
               <LogOut className="h-4 w-4" />
               <span>Sign Out</span>
@@ -168,30 +164,29 @@ const Account = () => {
 
       <div className="container mx-auto px-4 py-8">
         <Tabs defaultValue="orders" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-white shadow-sm">
-            <TabsTrigger value="orders" className="flex items-center space-x-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600">
+          <TabsList className="grid w-full grid-cols-4 bg-gray-900 shadow-sm border border-gray-800 rounded-lg">
+            <TabsTrigger value="orders" className="flex items-center space-x-2 data-[state=active]:bg-gradient-to-r from-blue-950 to-purple-950 data-[state=active]:text-blue-300 text-gray-200">
               <Package className="h-4 w-4" />
               <span>Orders</span>
             </TabsTrigger>
-            <TabsTrigger value="profile" className="flex items-center space-x-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600">
+            <TabsTrigger value="profile" className="flex items-center space-x-2 data-[state=active]:bg-gradient-to-r from-blue-950 to-purple-950 data-[state=active]:text-blue-300 text-gray-200">
               <User className="h-4 w-4" />
               <span>Profile</span>
             </TabsTrigger>
-            <TabsTrigger value="addresses" className="flex items-center space-x-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600">
+            <TabsTrigger value="addresses" className="flex items-center space-x-2 data-[state=active]:bg-gradient-to-r from-blue-950 to-purple-950 data-[state=active]:text-blue-300 text-gray-200">
               <MapPin className="h-4 w-4" />
               <span>Addresses</span>
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center space-x-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600">
+            <TabsTrigger value="settings" className="flex items-center space-x-2 data-[state=active]:bg-gradient-to-r from-blue-950 to-purple-950 data-[state=active]:text-blue-300 text-gray-200">
               <Settings className="h-4 w-4" />
               <span>Settings</span>
             </TabsTrigger>
           </TabsList>
-
           <TabsContent value="orders">
-            <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50">
-                <CardTitle>Order History</CardTitle>
-                <p className="text-gray-600">View and track your recent orders</p>
+            <Card className="shadow-lg border-0 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/90 backdrop-blur-sm">
+              <CardHeader className="bg-gradient-to-r from-gray-900 to-gray-800">
+                <CardTitle className="text-gray-100">Order History</CardTitle>
+                <p className="text-gray-400">View and track your recent orders</p>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
@@ -228,10 +223,10 @@ const Account = () => {
           </TabsContent>
 
           <TabsContent value="profile">
-            <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-green-50 to-blue-50">
-                <CardTitle>Profile Information</CardTitle>
-                <p className="text-gray-600">Update your personal information</p>
+            <Card className="shadow-lg border-0 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/90 backdrop-blur-sm">
+              <CardHeader className="bg-gradient-to-r from-gray-900 to-gray-800">
+                <CardTitle className="text-gray-100">Profile Information</CardTitle>
+                <p className="text-gray-400">Update your personal information</p>
               </CardHeader>
               <CardContent>
                 <form className="space-y-6">
@@ -270,10 +265,10 @@ const Account = () => {
           </TabsContent>
 
           <TabsContent value="addresses">
-            <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50">
-                <CardTitle>Saved Addresses</CardTitle>
-                <p className="text-gray-600">Manage your shipping and billing addresses</p>
+            <Card className="shadow-lg border-0 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/90 backdrop-blur-sm">
+              <CardHeader className="bg-gradient-to-r from-gray-900 to-gray-800">
+                <CardTitle className="text-gray-100">Saved Addresses</CardTitle>
+                <p className="text-gray-400">Manage your shipping and billing addresses</p>
               </CardHeader>
               <CardContent>
                 <AddressForm />
@@ -283,10 +278,10 @@ const Account = () => {
 
           <TabsContent value="settings">
             <div className="space-y-6">
-              <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm">
-                <CardHeader className="bg-gradient-to-r from-orange-50 to-yellow-50">
-                  <CardTitle>Account Settings</CardTitle>
-                  <p className="text-gray-600">Manage your account preferences</p>
+              <Card className="shadow-lg border-0 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/90 backdrop-blur-sm">
+                <CardHeader className="bg-gradient-to-r from-gray-900 to-gray-800">
+                  <CardTitle className="text-gray-100">Account Settings</CardTitle>
+                  <p className="text-gray-400">Manage your account preferences</p>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
@@ -323,9 +318,9 @@ const Account = () => {
                 </CardContent>
               </Card>
               
-              <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm">
-                <CardHeader className="bg-gradient-to-r from-red-50 to-orange-50">
-                  <CardTitle>Change Password</CardTitle>
+              <Card className="shadow-lg border-0 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/90 backdrop-blur-sm">
+                <CardHeader className="bg-gradient-to-r from-gray-900 to-gray-800">
+                  <CardTitle className="text-gray-100">Change Password</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <form className="space-y-4">

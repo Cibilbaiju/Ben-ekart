@@ -42,7 +42,7 @@ const App = () => (
               </Routes>
             </main>
             <Footer />
-            <Chatbot />
+            {/* Removed Chatbot for a more professional layout */}
           </div>
         </BrowserRouter>
       </TooltipProvider>

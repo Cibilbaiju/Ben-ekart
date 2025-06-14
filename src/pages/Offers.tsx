@@ -144,12 +144,12 @@ const Offers = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-800 text-gray-100">
       {/* Hero Section */}
-      <section ref={heroRef} className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 text-white py-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
+      <section ref={heroRef} className="bg-gradient-to-r from-blue-900 via-purple-900 to-gray-950 text-white py-16 relative overflow-hidden shadow-xl">
+        <div className="absolute inset-0 bg-black/40"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-float">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-float gradient-text">
             🔥 Special Offers 🔥
           </h1>
           <p className="text-xl mb-8 opacity-90">
@@ -159,7 +159,7 @@ const Offers = () => {
             <img 
               src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=300&fit=crop"
               alt="Special Offers"
-              className="rounded-2xl shadow-2xl max-w-md animate-shimmer"
+              className="rounded-2xl shadow-2xl max-w-md animate-shimmer border-2 border-white/10"
             />
           </div>
         </div>
@@ -168,12 +168,12 @@ const Offers = () => {
       {/* Flash Sale */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <Card ref={flashSaleRef} className="bg-gradient-to-r from-red-500 to-pink-600 text-white border-0 shadow-2xl overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-red-600/50 to-pink-700/50"></div>
+          <Card ref={flashSaleRef} className="bg-gradient-to-r from-gray-800 via-gray-900 to-gray-950/95 text-white border-0 shadow-xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 to-purple-800/40"></div>
             <CardHeader className="text-center relative z-10">
               <div className="flex items-center justify-center mb-4">
-                <Zap className="h-8 w-8 mr-2 animate-pulse" />
-                <CardTitle className="text-3xl">⚡ Flash Sale! ⚡</CardTitle>
+                <Zap className="h-8 w-8 mr-2 animate-pulse text-blue-400" />
+                <CardTitle className="text-3xl text-white">⚡ Flash Sale! ⚡</CardTitle>
               </div>
               <p className="text-lg opacity-90">Up to 50% off on selected items</p>
             </CardHeader>

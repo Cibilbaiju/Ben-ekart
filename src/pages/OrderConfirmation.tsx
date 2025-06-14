@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -32,23 +31,23 @@ const OrderConfirmation = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-800">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto">
           {/* Success Header */}
           <div className="text-center mb-8">
-            <div className="success-icon inline-flex items-center justify-center w-24 h-24 bg-green-100 rounded-full mb-4">
-              <CheckCircle className="h-12 w-12 text-green-600" />
+            <div className="success-icon inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-green-900 via-green-800 to-green-950 rounded-full mb-4 shadow-xl border border-white/10">
+              <CheckCircle className="h-12 w-12 text-green-400" />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Order Confirmed!</h1>
-            <p className="text-lg text-gray-600">Thank you for your purchase. Your order has been placed successfully.</p>
+            <h1 className="text-4xl font-bold text-transparent bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text mb-2">Order Confirmed!</h1>
+            <p className="text-lg text-gray-300">Thank you for your purchase. Your order has been placed successfully.</p>
           </div>
 
           {/* Order Details */}
           <div className="space-y-6">
-            <Card className="order-card shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-green-500 to-green-600 text-white">
-                <CardTitle className="flex items-center">
+            <Card className="order-card shadow-lg bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/95 border-0">
+              <CardHeader className="bg-gradient-to-r from-green-900 to-green-800 text-white">
+                <CardTitle className="flex items-center text-white">
                   <Package className="h-5 w-5 mr-2" />
                   Order Details
                 </CardTitle>
@@ -79,9 +78,9 @@ const OrderConfirmation = () => {
               </CardContent>
             </Card>
 
-            <Card className="order-card shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
-                <CardTitle className="flex items-center">
+            <Card className="order-card shadow-lg bg-gradient-to-r from-blue-950 via-blue-900 to-gray-950 border-0">
+              <CardHeader className="bg-gradient-to-r from-blue-950 to-blue-900 text-white">
+                <CardTitle className="flex items-center text-white">
                   <Truck className="h-5 w-5 mr-2" />
                   Delivery Information
                 </CardTitle>
@@ -100,9 +99,9 @@ const OrderConfirmation = () => {
               </CardContent>
             </Card>
 
-            <Card className="order-card shadow-lg">
-              <CardHeader className="bg-gradient-to-r from-purple-500 to-purple-600 text-white">
-                <CardTitle className="flex items-center">
+            <Card className="order-card shadow-lg bg-gradient-to-br from-purple-950 via-purple-900 to-gray-950 border-0">
+              <CardHeader className="bg-gradient-to-r from-purple-950 to-purple-900 text-white">
+                <CardTitle className="flex items-center text-white">
                   <MapPin className="h-5 w-5 mr-2" />
                   Track Your Order
                 </CardTitle>
@@ -145,13 +144,13 @@ const OrderConfirmation = () => {
           {/* Action Buttons */}
           <div className="flex space-x-4 mt-8 justify-center">
             <Link to="/">
-              <Button variant="outline" className="order-card">
+              <Button variant="outline" className="order-card border-gray-800 text-gray-200 hover:bg-gray-900">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Continue Shopping
               </Button>
             </Link>
             <Link to="/account">
-              <Button className="order-card bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+              <Button className="order-card bg-gradient-to-r from-blue-950 to-purple-950 hover:from-blue-900 hover:to-purple-950 text-white shadow-lg">
                 View All Orders
               </Button>
             </Link>

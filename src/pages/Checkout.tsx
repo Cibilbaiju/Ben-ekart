@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -126,8 +125,8 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-800 text-gray-100">
+      <div className="container mx-auto px-4 py-12">
         <div className="flex items-center mb-8">
           <Link to="/cart">
             <Button variant="outline" className="mr-4">
@@ -135,7 +134,7 @@ const Checkout = () => {
               Back to Cart
             </Button>
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900">Checkout</h1>
+          <h1 className="text-3xl font-bold text-gray-100">Checkout</h1>
         </div>
 
         {/* Progress Steps */}
@@ -158,7 +157,7 @@ const Checkout = () => {
           {/* Main Content */}
           <div className="lg:col-span-2">
             {currentStep === 1 && (
-              <Card>
+              <Card className="bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/95 shadow-2xl border border-gray-800/60 backdrop-blur-lg">
                 <CardHeader>
                   <CardTitle>Delivery Option</CardTitle>
                 </CardHeader>
@@ -385,7 +384,7 @@ const Checkout = () => {
             )}
 
             {currentStep === 2 && (
-              <Card>
+              <Card className="bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/95 shadow-2xl border border-gray-800/60 backdrop-blur-lg">
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <CreditCard className="h-5 w-5 mr-2" />
@@ -449,7 +448,7 @@ const Checkout = () => {
             )}
 
             {currentStep === 3 && (
-              <Card>
+              <Card className="bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/95 shadow-2xl border border-gray-800/60 backdrop-blur-lg">
                 <CardHeader>
                   <CardTitle>Review Your Order</CardTitle>
                 </CardHeader>
@@ -511,7 +510,7 @@ const Checkout = () => {
 
           {/* Order Summary */}
           <div>
-            <Card className="sticky top-4">
+            <Card className="sticky top-4 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/95 shadow-2xl border border-gray-800/60 backdrop-blur-lg">
               <CardHeader>
                 <CardTitle>Order Summary</CardTitle>
               </CardHeader>
