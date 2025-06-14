@@ -1,9 +1,9 @@
-
 import { useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tv, Waves, Refrigerator, Microwave, Wind } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -43,6 +43,14 @@ const categories = [
     color: "from-orange-500 to-orange-600",
     hoverColor: "from-orange-600 to-orange-700",
   },
+];
+
+const categoryRoutes = [
+  "/category/televisions",
+  "/category/washing-machines",
+  "/category/refrigerators",
+  "", // Microwaves (no separate page yet)
+  "", // Air Conditioners (no separate page yet)
 ];
 
 export const CategoryGrid = () => {
@@ -139,24 +147,34 @@ export const CategoryGrid = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {categories.map((category, index) => (
-            <Card 
-              key={category.name} 
-              ref={(el) => el && (cardsRef.current[index] = el)}
-              className="group cursor-pointer border-0 shadow-lg overflow-hidden bg-muted"
-            >
-              <CardContent className="p-8 text-center relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-muted to-background opacity-90"></div>
-                <div className="relative z-10">
-                  <div className={`category-icon bg-gradient-to-br ${category.color} rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg`}>
-                    <category.icon className="h-10 w-10 text-white" />
+          {categories.map((category, index) => {
+            const link = categoryRoutes[index];
+            const isLinked = Boolean(link);
+            const CardEl = isLinked ? Link : "div";
+            const cardProps = isLinked ? { to: link } : {};
+            return (
+              <Card
+                key={category.name}
+                ref={(el) => el && (cardsRef.current[index] = el)}
+                as={CardEl}
+                {...cardProps}
+                className={`group cursor-pointer border-0 shadow-lg overflow-hidden bg-muted hover-scale transition-all duration-200 ${
+                  isLinked ? "" : "opacity-60 pointer-events-none"
+                }`}
+              >
+                <CardContent className="p-8 text-center relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-muted to-background opacity-90"></div>
+                  <div className="relative z-10">
+                    <div className={`category-icon bg-gradient-to-br ${category.color} rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg`}>
+                      <category.icon className="h-10 w-10 text-white" />
+                    </div>
+                    <h3 className="font-bold text-foreground mb-3 text-lg">{category.name}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{category.description}</p>
                   </div>
-                  <h3 className="font-bold text-foreground mb-3 text-lg">{category.name}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{category.description}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

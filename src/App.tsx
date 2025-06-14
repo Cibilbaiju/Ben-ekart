@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,6 +15,9 @@ import Contact from "./pages/Contact";
 import Account from "./pages/Account";
 import Offers from "./pages/Offers";
 import NotFound from "./pages/NotFound";
+import Televisions from "./pages/Televisions";
+import WashingMachines from "./pages/WashingMachines";
+import Refrigerators from "./pages/Refrigerators";
 
 // Lock dark mode
 const queryClient = new QueryClient();
@@ -32,6 +34,10 @@ const App = () => (
             <main className="flex-1 overflow-y-auto bg-background">
               <Routes>
                 <Route path="/" element={<Index />} />
+                {/* Category routes */}
+                <Route path="/category/televisions" element={<Televisions />} />
+                <Route path="/category/washing-machines" element={<WashingMachines />} />
+                <Route path="/category/refrigerators" element={<Refrigerators />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/order-confirmation" element={<OrderConfirmation />} />
