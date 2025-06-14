@@ -4,16 +4,16 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { 
+  Zap,
   Search, 
   ShoppingCart, 
   User, 
   Menu, 
-  X, 
-  Phone,
-  MapPin,
-  Heart
+  X,
+  Store,
+  Book,
+  MessageSquare,
 } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 
@@ -24,10 +24,11 @@ export const Header = () => {
   const itemCount = useCartStore((state) => state.items.reduce((sum, item) => sum + item.quantity, 0));
 
   const navigation = [
-    { name: "Home", href: "/" },
-    { name: "Offers", href: "/offers" },
-    { name: "Contact", href: "/contact" },
-    { name: "Account", href: "/account" },
+    { name: "Televisions", href: "/offers" },
+    { name: "Appliances", href: "/offers" },
+    { name: "Furniture", href: "/offers" },
+    { name: "New Arrivals", href: "/offers" },
+    { name: "Top Deals", href: "/offers" },
   ];
 
   const isActiveLink = (href: string) => {
@@ -35,23 +36,24 @@ export const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+    <header className="sticky top-0 z-50 bg-gray-900 text-white border-b border-gray-700">
       {/* Top bar */}
-      <div className="bg-primary text-primary-foreground py-2">
+      <div className="bg-gray-800 py-2 hidden md:block">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center justify-end text-xs text-gray-400">
             <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <Phone className="h-4 w-4" />
-                <span>1800-123-4567</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <MapPin className="h-4 w-4" />
-                <span>Free delivery in Mumbai, Delhi & Bangalore</span>
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <span>Free shipping on orders above ₹50,000</span>
+              <Link to="#" className="flex items-center space-x-1 hover:text-white">
+                <Store className="h-4 w-4" />
+                <span>Find a store</span>
+              </Link>
+              <Link to="#" className="flex items-center space-x-1 hover:text-white">
+                <Book className="h-4 w-4" />
+                <span>Buying guides</span>
+              </Link>
+              <Link to="/contact" className="flex items-center space-x-1 hover:text-white">
+                <MessageSquare className="h-4 w-4" />
+                <span>Contact us</span>
+              </Link>
             </div>
           </div>
         </div>
@@ -59,121 +61,121 @@ export const Header = () => {
 
       {/* Main header */}
       <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4 md:gap-8">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">BEN</span>
+          <Link to="/" className="flex items-center space-x-2 flex-shrink-0">
+            <div className="bg-blue-600 p-2 rounded-lg">
+                <Zap className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white">BEN</h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Home & Furniture</p>
+              <h1 className="text-2xl font-bold">HomeHaven</h1>
+              <p className="text-xs text-gray-400">Premium Appliances</p>
             </div>
           </Link>
 
           {/* Search bar */}
-          <div className="hidden md:flex flex-1 max-w-2xl mx-8">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <div className="flex-1 min-w-0 hidden md:block">
+            <div className="relative w-full max-w-xl mx-auto">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
               <Input
                 type="text"
-                placeholder="Search for appliances, furniture..."
+                placeholder="What are you looking for?"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 w-full"
+                className="pl-12 pr-4 py-3 w-full rounded-lg bg-gray-800 border-gray-700 focus:bg-gray-700 focus:ring-primary h-12 text-sm"
               />
             </div>
           </div>
 
           {/* Right side actions */}
-          <div className="flex items-center space-x-4">
-            <ThemeToggle />
-            
-            <Button variant="ghost" size="icon" className="hidden md:flex">
-              <Heart className="h-5 w-5" />
-            </Button>
-
-            <Button variant="ghost" size="icon" asChild>
-              <Link to="/account">
-                <User className="h-5 w-5" />
-              </Link>
-            </Button>
-
-            <Button variant="ghost" size="icon" asChild className="relative">
-              <Link to="/cart">
-                <ShoppingCart className="h-5 w-5" />
-                {itemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs">
-                    {itemCount}
-                  </Badge>
-                )}
-              </Link>
-            </Button>
-
+          <div className="flex items-center space-x-4 md:space-x-6">
+            <Link to="/account" className="hidden md:flex items-center space-x-2 text-sm font-medium hover:text-white">
+                <User className="h-6 w-6" />
+                <span>Sign In</span>
+            </Link>
+            <Link to="/cart" className="flex items-center space-x-2 text-sm font-medium hover:text-white relative">
+              <ShoppingCart className="h-6 w-6" />
+              <span className="hidden md:inline">Cart</span>
+              {itemCount > 0 && (
+                <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs">
+                  {itemCount}
+                </Badge>
+              )}
+            </Link>
             <Button
               variant="ghost"
               size="icon"
               className="md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
         </div>
-
-        {/* Navigation */}
-        <nav className="hidden md:flex items-center space-x-8 mt-4">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              to={item.href}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActiveLink(item.href)
-                  ? "text-primary border-b-2 border-primary pb-1"
-                  : "text-muted-foreground"
-              }`}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Mobile search */}
-        <div className="md:hidden mt-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <Input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-4 py-2 w-full"
-            />
+      </div>
+      
+      {/* Navigation */}
+      <nav className="hidden md:flex bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t border-gray-700">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center space-x-8">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`text-sm font-medium transition-colors hover:text-primary py-3 ${
+                  isActiveLink(item.href)
+                    ? "text-primary border-b-2 border-primary"
+                    : "text-gray-300"
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
           </div>
         </div>
+      </nav>
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t pt-4">
-            <nav className="space-y-4">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`block text-base font-medium transition-colors ${
-                    isActiveLink(item.href)
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-primary"
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
+          <div className="md:hidden absolute top-full left-0 w-full bg-gray-900 border-t border-gray-700 pb-4">
+            <div className="container mx-auto px-4">
+              <div className="mt-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <Input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10 pr-4 py-2 w-full bg-gray-800 border-gray-700"
+                  />
+                </div>
+              </div>
+              <nav className="space-y-4 mt-4">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={`block text-base font-medium transition-colors ${
+                      isActiveLink(item.href)
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-primary"
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </nav>
+               <div className="border-t border-gray-700 mt-4 pt-4 space-y-4">
+                  <Link to="/account" onClick={() => setIsMenuOpen(false)} className="flex items-center space-x-2 text-base font-medium hover:text-primary">
+                      <User className="h-6 w-6" />
+                      <span>Sign In / My Account</span>
+                  </Link>
+               </div>
+            </div>
           </div>
         )}
-      </div>
     </header>
   );
 };

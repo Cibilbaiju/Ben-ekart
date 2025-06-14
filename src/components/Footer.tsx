@@ -6,7 +6,7 @@ export const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
@@ -28,26 +28,27 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Useful Links */}
           <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <h4 className="font-semibold mb-4">Useful Links</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/" className="text-gray-400 hover:text-white transition-colors">Home</Link></li>
-              <li><Link to="/offers" className="text-gray-400 hover:text-white transition-colors">Offers</Link></li>
-              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
-              <li><Link to="/account" className="text-gray-400 hover:text-white transition-colors">My Account</Link></li>
+              <li><Link to="#" className="text-gray-400 hover:text-white transition-colors">About HomeHaven</Link></li>
+              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Help and Support</Link></li>
+              <li><Link to="#" className="text-gray-400 hover:text-white transition-colors">FAQs</Link></li>
+              <li><Link to="#" className="text-gray-400 hover:text-white transition-colors">Buying Guide</Link></li>
+              <li><Link to="#" className="text-gray-400 hover:text-white transition-colors">Return Policy</Link></li>
             </ul>
           </div>
 
           {/* Product Categories */}
           <div>
-            <h4 className="font-semibold mb-4">Categories</h4>
+            <h4 className="font-semibold mb-4">Products</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Televisions</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Washing Machines</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Refrigerators</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Microwaves</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Air Conditioners</a></li>
+              <li><Link to="/offers" className="text-gray-400 hover:text-white transition-colors">Televisions</Link></li>
+              <li><Link to="/offers" className="text-gray-400 hover:text-white transition-colors">Appliances</Link></li>
+              <li><Link to="/offers" className="text-gray-400 hover:text-white transition-colors">Furniture</Link></li>
+              <li><Link to="/offers" className="text-gray-400 hover:text-white transition-colors">New Arrivals</Link></li>
+              <li><Link to="/offers" className="text-gray-400 hover:text-white transition-colors">Top Deals</Link></li>
             </ul>
           </div>
 
@@ -72,7 +73,7 @@ export const Footer = () => {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-          <p>&copy; 2024 HomeHaven. All rights reserved. | Privacy Policy | Terms of Service</p>
+          <p>&copy; 2025 HomeHaven. All rights reserved. | <Link to="#" className="hover:text-white">Privacy Policy</Link> | <Link to="#" className="hover:text-white">Terms of Service</Link></p>
         </div>
       </div>
     </footer>
