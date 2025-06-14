@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -14,6 +13,7 @@ import {
   Store,
   Book,
   MessageSquare,
+  Phone,
 } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 
@@ -40,7 +40,11 @@ export const Header = () => {
       {/* Top bar */}
       <div className="bg-gray-800 py-2 hidden md:block">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-end text-xs text-gray-400">
+          <div className="flex items-center justify-between text-xs text-gray-400">
+            <div className="flex items-center space-x-2">
+              <Phone className="h-4 w-4" />
+              <span>1-800-APPLIANCE</span>
+            </div>
             <div className="flex items-center space-x-6">
               <Link to="#" className="flex items-center space-x-1 hover:text-white">
                 <Store className="h-4 w-4" />
