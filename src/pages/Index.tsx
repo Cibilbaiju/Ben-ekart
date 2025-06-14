@@ -4,6 +4,7 @@ import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { BestSellers } from "@/components/home/BestSellers";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { NewArrivals } from "@/components/home/NewArrivals";
+import { FurnitureCollection } from "@/components/home/FurnitureCollection";
 
 const Index = () => {
   return (
@@ -15,6 +16,9 @@ const Index = () => {
       <div className="py-8 md:py-12 bg-gray-900/50">
         <BestSellers />
       </div>
+      {/* --- Furniture Section Added Below --- */}
+      <FurnitureCollection />
+      {/* --- END Furniture Section --- */}
       <div className="py-8 md:py-12">
         <NewArrivals />
       </div>
