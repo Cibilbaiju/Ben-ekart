@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,7 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useCartStore } from "@/store/cartStore";
 import { useToast } from "@/hooks/use-toast";
-import { MapPin, Truck, CreditCard, Shield, ArrowLeft, Store } from "lucide-react";
+import { MapPin, Truck, CreditCard, Shield, ArrowLeft, Store, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Checkout = () => {
