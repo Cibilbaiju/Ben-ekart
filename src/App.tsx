@@ -8,8 +8,6 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Chatbot } from "@/components/Chatbot";
-import { AppSidebar } from "@/components/AppSidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import Index from "./pages/Index";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
@@ -29,28 +27,23 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <SidebarProvider>
-            <div className="flex w-full min-h-screen bg-background text-foreground dark">
-              <AppSidebar />
-              <div className="flex-1 flex flex-col min-h-screen ml-56 bg-background">
-                <Header />
-                <main className="flex-1 overflow-y-auto bg-background">
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/order-confirmation" element={<OrderConfirmation />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/account" element={<Account />} />
-                    <Route path="/offers" element={<Offers />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </main>
-                <Footer />
-                <Chatbot />
-              </div>
-            </div>
-          </SidebarProvider>
+          <div className="flex flex-col w-full min-h-screen bg-background text-foreground dark">
+            <Header />
+            <main className="flex-1 overflow-y-auto bg-background">
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/order-confirmation" element={<OrderConfirmation />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/account" element={<Account />} />
+                <Route path="/offers" element={<Offers />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+            <Footer />
+            <Chatbot />
+          </div>
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
