@@ -1,3 +1,4 @@
+
 import {
   Carousel,
   CarouselContent,
@@ -29,14 +30,7 @@ export function HeroCarousel() {
               {/* Set height a bit larger than before but not full screen */}
               <div className="relative w-full h-[90vh] aspect-auto overflow-hidden transition-all">
                 <img src={image.src} alt={image.alt} className="w-full h-full object-cover" />
-                <div className="absolute left-4 bottom-4 md:left-8 md:bottom-8">
-                  <Button 
-                    size="lg"
-                    className="bg-primary text-primary-foreground font-bold shadow-lg px-8 py-3 rounded-lg text-lg opacity-90 hover:opacity-100 transition-opacity"
-                  >
-                    Shop Now
-                  </Button>
-                </div>
+                {/* "Shop Now" button removed, leaving just the image and overlay structure */}
               </div>
             </CarouselItem>
           ))}
@@ -49,3 +43,4 @@ export function HeroCarousel() {
     </section>
   )
 }
+
