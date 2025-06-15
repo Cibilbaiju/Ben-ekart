@@ -45,7 +45,7 @@ const airConditioners = [
 ];
 
 const AirConditioners = () => (
-  <div className="min-h-screen bg-gradient-to-br from-orange-900 via-gray-950 to-black text-foreground py-12 px-4">
+  <div className="min-h-screen bg-gradient-to-b from-black via-neutral-900 to-neutral-950 text-foreground py-12 px-4">
     <div className="container mx-auto max-w-5xl">
       <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Air Conditioners</h1>
       <CategoryHeroCarousel images={airConditionerPhotos} />
