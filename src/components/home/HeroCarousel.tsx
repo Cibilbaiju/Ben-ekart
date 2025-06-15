@@ -26,7 +26,7 @@ export function HeroCarousel() {
         <CarouselContent>
           {carouselImages.map((image, index) => (
             <CarouselItem key={index}>
-              <div className="w-full aspect-[16/12] md:aspect-[16/6] lg:aspect-[16/5] overflow-hidden transition-all">
+              <div className="w-full h-[90vh] aspect-auto md:aspect-[16/6] lg:aspect-[16/5] overflow-hidden transition-all">
                 <img src={image.src} alt={image.alt} className="w-full h-full object-cover" />
               </div>
             </CarouselItem>
