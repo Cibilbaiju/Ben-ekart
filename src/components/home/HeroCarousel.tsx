@@ -29,7 +29,7 @@ export function HeroCarousel() {
             <CarouselItem key={index}>
               <div className="relative w-full h-[90vh] aspect-auto md:aspect-[16/6] lg:aspect-[16/5] overflow-hidden transition-all">
                 <img src={image.src} alt={image.alt} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute left-4 bottom-4 md:left-8 md:bottom-8">
                   <Button 
                     size="lg"
                     className="bg-primary text-primary-foreground font-bold shadow-lg px-8 py-3 rounded-lg text-lg opacity-90 hover:opacity-100 transition-opacity"
