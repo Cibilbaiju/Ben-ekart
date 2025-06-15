@@ -18,6 +18,8 @@ import NotFound from "./pages/NotFound";
 import Televisions from "./pages/Televisions";
 import WashingMachines from "./pages/WashingMachines";
 import Refrigerators from "./pages/Refrigerators";
+import Microwaves from "./pages/Microwaves";
+import AirConditioners from "./pages/AirConditioners";
 
 // Lock dark mode
 const queryClient = new QueryClient();
@@ -38,6 +40,8 @@ const App = () => (
                 <Route path="/category/televisions" element={<Televisions />} />
                 <Route path="/category/washing-machines" element={<WashingMachines />} />
                 <Route path="/category/refrigerators" element={<Refrigerators />} />
+                <Route path="/category/microwaves" element={<Microwaves />} />
+                <Route path="/category/air-conditioners" element={<AirConditioners />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/order-confirmation" element={<OrderConfirmation />} />

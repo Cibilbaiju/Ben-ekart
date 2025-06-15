@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tv, Waves, Refrigerator, Microwave, Wind } from "lucide-react";
@@ -46,12 +45,13 @@ const categories = [
   },
 ];
 
+// All categories now have dedicated routes
 const categoryRoutes = [
   "/category/televisions",
   "/category/washing-machines",
   "/category/refrigerators",
-  "", // Microwaves (no separate page yet)
-  "", // Air Conditioners (no separate page yet)
+  "/category/microwaves", // Added
+  "/category/air-conditioners", // Added
 ];
 
 export const CategoryGrid = () => {
@@ -155,9 +155,7 @@ export const CategoryGrid = () => {
               <Card
                 key={category.name}
                 ref={(el) => el && (cardsRef.current[index] = el)}
-                className={`group cursor-pointer border-0 shadow-lg overflow-hidden bg-muted hover-scale transition-all duration-200 ${
-                  isLinked ? "" : "opacity-60 pointer-events-none"
-                }`}
+                className={`group cursor-pointer border-0 shadow-lg overflow-hidden bg-muted hover-scale transition-all duration-200`}
               >
                 <CardContent className="p-8 text-center relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-muted to-background opacity-90"></div>
@@ -171,13 +169,11 @@ export const CategoryGrid = () => {
                 </CardContent>
               </Card>
             );
-            // If link exists wrap with <Link>, else just render the Card.
-            return isLinked ? (
+            // Link all available cards to their category page
+            return (
               <Link to={link} key={category.name} className="block h-full">
                 {cardEl}
               </Link>
-            ) : (
-              cardEl
             );
           })}
         </div>
