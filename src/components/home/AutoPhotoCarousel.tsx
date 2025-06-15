@@ -44,7 +44,7 @@ export function AutoPhotoCarousel() {
         className="w-full max-w-5xl mx-auto"
         plugins={[
           Autoplay({
-            delay: 1, // almost zero, fastest, feels 'continuous'
+            delay: 2000,
             stopOnInteraction: false,
             stopOnMouseEnter: false,
             playOnInit: true,
@@ -59,13 +59,13 @@ export function AutoPhotoCarousel() {
             <CarouselItem
               key={idx}
               className="basis-auto flex-shrink-0 w-auto px-0.5"
-              style={{ maxWidth: 88 }}
+              style={{ maxWidth: 160 }}
             >
               <a href={image.link} tabIndex={0} aria-label={image.alt}>
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-background shadow animate-fade-in transition-all hover:scale-105 focus:scale-105"
+                  className="w-28 h-16 md:w-36 md:h-20 rounded-lg object-cover border-2 border-background shadow animate-fade-in transition-all hover:scale-105 focus:scale-105"
                   loading="lazy"
                   draggable={false}
                 />
