@@ -6,6 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { Button } from "@/components/ui/button"
 import Autoplay from "embla-carousel-autoplay"
 
 const carouselImages = [
@@ -26,8 +27,16 @@ export function HeroCarousel() {
         <CarouselContent>
           {carouselImages.map((image, index) => (
             <CarouselItem key={index}>
-              <div className="w-full h-[90vh] aspect-auto md:aspect-[16/6] lg:aspect-[16/5] overflow-hidden transition-all">
+              <div className="relative w-full h-[90vh] aspect-auto md:aspect-[16/6] lg:aspect-[16/5] overflow-hidden transition-all">
                 <img src={image.src} alt={image.alt} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Button 
+                    size="lg"
+                    className="bg-primary text-primary-foreground font-bold shadow-lg px-8 py-3 rounded-lg text-lg opacity-90 hover:opacity-100 transition-opacity"
+                  >
+                    Shop Now
+                  </Button>
+                </div>
               </div>
             </CarouselItem>
           ))}
@@ -40,3 +49,4 @@ export function HeroCarousel() {
     </section>
   )
 }
+
