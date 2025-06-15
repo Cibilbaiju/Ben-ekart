@@ -1,7 +1,7 @@
-
 import { PhotoScroller } from "@/components/PhotoScroller";
 import { ProductCard } from "@/components/ProductCard";
 import { FurnitureCollection } from "@/components/home/FurnitureCollection";
+import { CategoryHeroCarousel } from "@/components/CategoryHeroCarousel";
 
 const furniturePhotos = [
   { src: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=900&q=80", alt: "Modern sofa" },
@@ -49,7 +49,7 @@ const FurnitureCategory = () => (
   <div className="min-h-screen bg-gradient-to-br from-rose-900 via-gray-950 to-black text-foreground py-12 px-4">
     <div className="container mx-auto max-w-5xl">
       <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Furniture</h1>
-      <PhotoScroller photos={furniturePhotos} />
+      <CategoryHeroCarousel images={furniturePhotos} />
 
       {/* Best Sellers */}
       <section className="mb-12">

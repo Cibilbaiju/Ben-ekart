@@ -1,6 +1,6 @@
-
 import { PhotoScroller } from "@/components/PhotoScroller";
 import { ProductCard } from "@/components/ProductCard";
+import { CategoryHeroCarousel } from "@/components/CategoryHeroCarousel";
 
 const washingMachinePhotos = [
   { src: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80", alt: "Modern washing machine macro" },
@@ -48,7 +48,7 @@ const WashingMachines = () => (
   <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-gray-950 to-black text-foreground py-12 px-4">
     <div className="container mx-auto max-w-5xl">
       <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Washing Machines</h1>
-      <PhotoScroller photos={washingMachinePhotos} />
+      <CategoryHeroCarousel images={washingMachinePhotos} />
 
       {/* Best Sellers */}
       <section className="mb-12">

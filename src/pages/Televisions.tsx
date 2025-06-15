@@ -1,6 +1,6 @@
-
 import { PhotoScroller } from "@/components/PhotoScroller";
 import { ProductCard } from "@/components/ProductCard";
+import { CategoryHeroCarousel } from "@/components/CategoryHeroCarousel";
 
 const televisionPhotos = [
   { src: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=900&q=80", alt: "4K Smart TV in living room" },
@@ -58,7 +58,7 @@ const Televisions = () => (
   <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-black text-foreground py-12 px-4">
     <div className="container mx-auto max-w-5xl">
       <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Televisions</h1>
-      <PhotoScroller photos={televisionPhotos} />
+      <CategoryHeroCarousel images={televisionPhotos} />
 
       {/* Best Sellers */}
       <section className="mb-12">

@@ -1,6 +1,6 @@
-
 import { PhotoScroller } from "@/components/PhotoScroller";
 import { ProductCard } from "@/components/ProductCard";
+import { CategoryHeroCarousel } from "@/components/CategoryHeroCarousel";
 
 const microwavePhotos = [
   { src: "https://images.unsplash.com/photo-1506368083636-6defb67639b7?auto=format&fit=crop&w=900&q=80", alt: "Open microwave oven" },
@@ -48,7 +48,7 @@ const Microwaves = () => (
   <div className="min-h-screen bg-gradient-to-br from-purple-900 via-gray-950 to-black text-foreground py-12 px-4">
     <div className="container mx-auto max-w-5xl">
       <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Microwaves</h1>
-      <PhotoScroller photos={microwavePhotos} />
+      <CategoryHeroCarousel images={microwavePhotos} />
 
       {/* Best Sellers */}
       <section className="mb-12">

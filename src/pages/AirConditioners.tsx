@@ -1,6 +1,6 @@
-
 import { PhotoScroller } from "@/components/PhotoScroller";
 import { ProductCard } from "@/components/ProductCard";
+import { CategoryHeroCarousel } from "@/components/CategoryHeroCarousel";
 
 const airConditionerPhotos = [
   { src: "https://images.unsplash.com/photo-1530133532239-01a4f96c1f5a?auto=format&fit=crop&w=900&q=80", alt: "Mounted air conditioner" },
@@ -48,7 +48,7 @@ const AirConditioners = () => (
   <div className="min-h-screen bg-gradient-to-br from-orange-900 via-gray-950 to-black text-foreground py-12 px-4">
     <div className="container mx-auto max-w-5xl">
       <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Air Conditioners</h1>
-      <PhotoScroller photos={airConditionerPhotos} />
+      <CategoryHeroCarousel images={airConditionerPhotos} />
 
       {/* Best Sellers */}
       <section className="mb-12">

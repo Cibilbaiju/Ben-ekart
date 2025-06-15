@@ -1,5 +1,4 @@
-
-import { PhotoScroller } from "@/components/PhotoScroller";
+import { CategoryHeroCarousel } from "@/components/CategoryHeroCarousel";
 import { ProductCard } from "@/components/ProductCard";
 
 const refrigeratorPhotos = [
@@ -48,7 +47,7 @@ const Refrigerators = () => (
   <div className="min-h-screen bg-gradient-to-br from-green-950 via-gray-950 to-black text-foreground py-12 px-4">
     <div className="container mx-auto max-w-5xl">
       <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Refrigerators</h1>
-      <PhotoScroller photos={refrigeratorPhotos} />
+      <CategoryHeroCarousel images={refrigeratorPhotos} />
 
       {/* Best Sellers */}
       <section className="mb-12">
