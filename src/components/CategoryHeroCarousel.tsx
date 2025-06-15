@@ -1,4 +1,5 @@
 
+import React from "react";
 import {
   Carousel,
   CarouselContent,
@@ -6,6 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 interface CategoryHeroCarouselProps {
   images: { src: string; alt: string }[];
@@ -13,7 +15,11 @@ interface CategoryHeroCarouselProps {
 
 export const CategoryHeroCarousel: React.FC<CategoryHeroCarouselProps> = ({ images }) => (
   <section className="w-full mb-8">
-    <Carousel className="w-full" opts={{ loop: true }}>
+    <Carousel
+      className="w-full"
+      opts={{ loop: true }}
+      plugins={[Autoplay({ delay: 3000, stopOnMouseEnter: true, stopOnInteraction: false })]}
+    >
       <CarouselContent>
         {images.map((image, index) => (
           <CarouselItem key={index}>
