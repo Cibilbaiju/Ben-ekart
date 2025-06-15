@@ -1,8 +1,8 @@
-
 import { useEffect, useRef } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import AutoPhotoCarousel from "./AutoPhotoCarousel";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -98,6 +98,8 @@ export const BestSellers = () => {
   return (
     <section ref={sectionRef} className="py-16 bg-background">
       <div className="container mx-auto px-4">
+        {/* --- Insert Carousel BEFORE the Best Sellers heading --- */}
+        <AutoPhotoCarousel />
         <div ref={titleRef} className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Best Sellers
