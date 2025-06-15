@@ -1,6 +1,7 @@
+
 import { useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Tv, Waves, Refrigerator, Microwave, Wind } from "lucide-react";
+import { Tv, Waves, Refrigerator, Microwave, Wind, Sofa } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "react-router-dom";
@@ -43,15 +44,22 @@ const categories = [
     color: "from-orange-500 to-orange-600",
     hoverColor: "from-orange-600 to-orange-700",
   },
+  {
+    name: "Furniture",
+    icon: Sofa,
+    description: "Modern Sofas, Tables & More",
+    color: "from-red-400 to-pink-500",
+    hoverColor: "from-red-500 to-pink-600",
+  },
 ];
 
-// All categories now have dedicated routes
 const categoryRoutes = [
   "/category/televisions",
   "/category/washing-machines",
   "/category/refrigerators",
-  "/category/microwaves", // Added
-  "/category/air-conditioners", // Added
+  "/category/microwaves",
+  "/category/air-conditioners",
+  "/category/furniture",
 ];
 
 export const CategoryGrid = () => {
@@ -147,10 +155,9 @@ export const CategoryGrid = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6">
           {categories.map((category, index) => {
             const link = categoryRoutes[index];
-            const isLinked = Boolean(link);
             const cardEl = (
               <Card
                 key={category.name}
@@ -169,7 +176,6 @@ export const CategoryGrid = () => {
                 </CardContent>
               </Card>
             );
-            // Link all available cards to their category page
             return (
               <Link to={link} key={category.name} className="block h-full">
                 {cardEl}

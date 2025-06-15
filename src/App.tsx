@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,8 +21,8 @@ import WashingMachines from "./pages/WashingMachines";
 import Refrigerators from "./pages/Refrigerators";
 import Microwaves from "./pages/Microwaves";
 import AirConditioners from "./pages/AirConditioners";
+import FurnitureCategory from "./pages/FurnitureCategory";
 
-// Lock dark mode
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -36,12 +37,12 @@ const App = () => (
             <main className="flex-1 overflow-y-auto bg-background">
               <Routes>
                 <Route path="/" element={<Index />} />
-                {/* Category routes */}
                 <Route path="/category/televisions" element={<Televisions />} />
                 <Route path="/category/washing-machines" element={<WashingMachines />} />
                 <Route path="/category/refrigerators" element={<Refrigerators />} />
                 <Route path="/category/microwaves" element={<Microwaves />} />
                 <Route path="/category/air-conditioners" element={<AirConditioners />} />
+                <Route path="/category/furniture" element={<FurnitureCategory />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/order-confirmation" element={<OrderConfirmation />} />
@@ -52,7 +53,6 @@ const App = () => (
               </Routes>
             </main>
             <Footer />
-            {/* Removed Chatbot for a more professional layout */}
           </div>
         </BrowserRouter>
       </TooltipProvider>
