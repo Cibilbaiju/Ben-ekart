@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -14,8 +15,16 @@ import {
   Book,
   MessageSquare,
   Phone,
+  Tv,
 } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
+// --------- Add NavigationMenu import from shadcn/ui ---------
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+} from "@/components/ui/navigation-menu";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,10 +32,11 @@ export const Header = () => {
   const location = useLocation();
   const itemCount = useCartStore((state) => state.items.reduce((sum, item) => sum + item.quantity, 0));
 
+  // Central navigation menu items
   const navigation = [
-    { name: "Televisions", href: "/offers" },
+    { name: "Televisions", href: "/category/televisions", icon: <Tv className="mr-2 h-4 w-4" /> },
     { name: "Appliances", href: "/offers" },
-    { name: "Furniture", href: "/offers" },
+    { name: "Furniture", href: "/category/furniture" },
     { name: "New Arrivals", href: "/offers" },
     { name: "Top Deals", href: "/offers" },
   ];
@@ -118,68 +128,73 @@ export const Header = () => {
         </div>
       </div>
       
-      {/* Navigation */}
+      {/* --- NEW: Navigation Menu using shadcn/ui --- */}
       <nav className="hidden md:flex bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t border-gray-700">
         <div className="container mx-auto px-4">
-          <div className="flex items-center space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`text-sm font-medium transition-colors hover:text-primary py-3 ${
-                  isActiveLink(item.href)
-                    ? "text-primary border-b-2 border-primary"
-                    : "text-gray-300"
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
+          <NavigationMenu>
+            <NavigationMenuList>
+              {navigation.map((item) => (
+                <NavigationMenuItem key={item.name}>
+                  <Link
+                    to={item.href}
+                    className={`flex items-center px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ${
+                        isActiveLink(item.href)
+                          ? "text-primary border-b-2 border-primary"
+                          : "text-gray-300"
+                      }`}
+                  >
+                      {/* Optionally render icon for TV */}
+                      {item.icon && item.icon}
+                      {item.name}
+                  </Link>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
       </nav>
 
-        {/* Mobile menu */}
-        {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-gray-900 border-t border-gray-700 pb-4">
-            <div className="container mx-auto px-4">
-              <div className="mt-4">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                  <Input
-                    type="text"
-                    placeholder="Search..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 pr-4 py-2 w-full bg-gray-800 border-gray-700"
-                  />
-                </div>
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-gray-900 border-t border-gray-700 pb-4">
+          <div className="container mx-auto px-4">
+            <div className="mt-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 pr-4 py-2 w-full bg-gray-800 border-gray-700"
+                />
               </div>
-              <nav className="space-y-4 mt-4">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className={`block text-base font-medium transition-colors ${
-                      isActiveLink(item.href)
-                        ? "text-primary"
-                        : "text-muted-foreground hover:text-primary"
-                    }`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </nav>
-               <div className="border-t border-gray-700 mt-4 pt-4 space-y-4">
-                  <Link to="/account" onClick={() => setIsMenuOpen(false)} className="flex items-center space-x-2 text-base font-medium hover:text-primary">
-                      <User className="h-6 w-6" />
-                      <span>Sign In / My Account</span>
-                  </Link>
-               </div>
             </div>
+            <nav className="space-y-4 mt-4">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`block text-base font-medium transition-colors ${
+                    isActiveLink(item.href)
+                      ? "text-primary"
+                      : "text-muted-foreground hover:text-primary"
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+             <div className="border-t border-gray-700 mt-4 pt-4 space-y-4">
+                <Link to="/account" onClick={() => setIsMenuOpen(false)} className="flex items-center space-x-2 text-base font-medium hover:text-primary">
+                    <User className="h-6 w-6" />
+                    <span>Sign In / My Account</span>
+                </Link>
+             </div>
           </div>
-        )}
+        </div>
+      )}
     </header>
   );
 };
