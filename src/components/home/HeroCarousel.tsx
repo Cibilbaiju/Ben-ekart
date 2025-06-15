@@ -27,8 +27,7 @@ export function HeroCarousel() {
         <CarouselContent>
           {carouselImages.map((image, index) => (
             <CarouselItem key={index}>
-              {/* Updated height for a smaller look on all screens, especially mobile */}
-              <div className="relative w-full h-[70vh] md:h-[65vh] lg:h-[55vh] aspect-auto md:aspect-[16/6] lg:aspect-[16/5] overflow-hidden transition-all">
+              <div className="relative w-full h-screen aspect-auto overflow-hidden transition-all">
                 <img src={image.src} alt={image.alt} className="w-full h-full object-cover" />
                 <div className="absolute left-4 bottom-4 md:left-8 md:bottom-8">
                   <Button 
@@ -50,3 +49,4 @@ export function HeroCarousel() {
     </section>
   )
 }
+
