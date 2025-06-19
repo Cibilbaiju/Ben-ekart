@@ -1,10 +1,10 @@
+
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { 
-  Zap,
   Search, 
   ShoppingCart, 
   User, 
@@ -78,13 +78,11 @@ export const Header = () => {
         <div className="flex items-center justify-between gap-4 md:gap-8">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 flex-shrink-0">
-            <div className="bg-blue-600 p-2 rounded-lg">
-                <Zap className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold">HomeHaven</h1>
-              <p className="text-xs text-gray-400">Premium Appliances</p>
-            </div>
+            <img 
+              src="/lovable-uploads/0af263c5-ee3f-4cb1-b853-5acab1c79ea6.png" 
+              alt="Logo" 
+              className="h-12 w-auto object-contain"
+            />
           </Link>
 
           {/* Search bar */}
