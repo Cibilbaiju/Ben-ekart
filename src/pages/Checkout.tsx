@@ -177,7 +177,7 @@ const Checkout = () => {
                         />
                         <Truck className="h-5 w-5 text-blue-600" />
                         <div>
-                          <span className="font-medium">Home Delivery</span>
+                          <span className={`font-medium ${deliveryOption === "delivery" ? "text-black" : "text-gray-700"}`}>Home Delivery</span>
                           <p className="text-sm text-gray-600">Get it delivered to your doorstep</p>
                         </div>
                       </label>
@@ -194,7 +194,7 @@ const Checkout = () => {
                         />
                         <Store className="h-5 w-5 text-green-600" />
                         <div>
-                          <span className="font-medium">Store Pickup</span>
+                          <span className={`font-medium ${deliveryOption === "pickup" ? "text-black" : "text-gray-700"}`}>Store Pickup</span>
                           <p className="text-sm text-gray-600">Pick up from our store - No delivery charges!</p>
                         </div>
                       </label>

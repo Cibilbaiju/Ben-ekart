@@ -56,7 +56,7 @@ export const Header = () => {
               <span>1-800-APPLIANCE</span>
             </div>
             <div className="flex items-center space-x-6">
-              <Link to="#" className="flex items-center space-x-1 hover:text-white">
+              <Link to="/find-store" className="flex items-center space-x-1 hover:text-white">
                 <Store className="h-4 w-4" />
                 <span>Find a store</span>
               </Link>

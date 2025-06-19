@@ -37,6 +37,7 @@ const App = () => (
             <main className="flex-1 overflow-y-auto bg-background">
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/find-store" element={<FindStore />} />
                 <Route path="/category/televisions" element={<Televisions />} />
                 <Route path="/category/washing-machines" element={<WashingMachines />} />
                 <Route path="/category/refrigerators" element={<Refrigerators />} />
