@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -65,7 +66,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
         <div className="container mx-auto px-4 text-center">
@@ -81,10 +82,10 @@ const Contact = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <Card>
+          <Card className="bg-gray-800 border-gray-700">
             <CardHeader>
-              <CardTitle className="text-2xl">Send us a Message</CardTitle>
-              <p className="text-gray-600">
+              <CardTitle className="text-2xl text-white">Send us a Message</CardTitle>
+              <p className="text-gray-300">
                 Fill out the form below and we'll get back to you within 24 hours
               </p>
             </CardHeader>
@@ -92,29 +93,31 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="firstName">First Name *</Label>
+                    <Label htmlFor="firstName" className="text-gray-200">First Name *</Label>
                     <Input 
                       id="firstName" 
                       placeholder="John" 
                       value={formData.firstName}
                       onChange={handleInputChange}
                       required
+                      className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="lastName">Last Name *</Label>
+                    <Label htmlFor="lastName" className="text-gray-200">Last Name *</Label>
                     <Input 
                       id="lastName" 
                       placeholder="Doe" 
                       value={formData.lastName}
                       onChange={handleInputChange}
                       required
+                      className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                     />
                   </div>
                 </div>
                 
                 <div>
-                  <Label htmlFor="email">Email *</Label>
+                  <Label htmlFor="email" className="text-gray-200">Email *</Label>
                   <Input 
                     id="email" 
                     type="email" 
@@ -122,32 +125,35 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                 </div>
                 
                 <div>
-                  <Label htmlFor="phone">Phone Number</Label>
+                  <Label htmlFor="phone" className="text-gray-200">Phone Number</Label>
                   <Input 
                     id="phone" 
                     type="tel" 
                     placeholder="+1 (555) 123-4567" 
                     value={formData.phone}
                     onChange={handleInputChange}
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                 </div>
                 
                 <div>
-                  <Label htmlFor="subject">Subject</Label>
+                  <Label htmlFor="subject" className="text-gray-200">Subject</Label>
                   <Input 
                     id="subject" 
                     placeholder="How can we help you?" 
                     value={formData.subject}
                     onChange={handleInputChange}
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                 </div>
                 
                 <div>
-                  <Label htmlFor="message">Message *</Label>
+                  <Label htmlFor="message" className="text-gray-200">Message *</Label>
                   <Textarea 
                     id="message" 
                     placeholder="Tell us more about your inquiry..."
@@ -155,6 +161,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleInputChange}
                     required
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                 </div>
                 
@@ -171,10 +178,10 @@ const Contact = () => {
 
           {/* Contact Information */}
           <div className="space-y-6">
-            <Card>
+            <Card className="bg-gray-800 border-gray-700">
               <CardHeader>
-                <CardTitle className="text-2xl">Get in Touch</CardTitle>
-                <p className="text-gray-600">
+                <CardTitle className="text-2xl text-white">Get in Touch</CardTitle>
+                <p className="text-gray-300">
                   Multiple ways to reach our customer service team
                 </p>
               </CardHeader>
@@ -184,9 +191,9 @@ const Contact = () => {
                     <Phone className="h-6 w-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">Call Us</h3>
-                    <p className="text-gray-600">1-800-APPLIANCE</p>
-                    <p className="text-sm text-gray-500">Toll-free customer service</p>
+                    <h3 className="font-semibold text-white">Call Us</h3>
+                    <p className="text-gray-300">1-800-APPLIANCE</p>
+                    <p className="text-sm text-gray-400">Toll-free customer service</p>
                   </div>
                 </div>
 
@@ -195,9 +202,9 @@ const Contact = () => {
                     <Mail className="h-6 w-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">Email Us</h3>
-                    <p className="text-gray-600">support@homehaven.com</p>
-                    <p className="text-sm text-gray-500">We'll respond within 24 hours</p>
+                    <h3 className="font-semibold text-white">Email Us</h3>
+                    <p className="text-gray-300">support@homehaven.com</p>
+                    <p className="text-sm text-gray-400">We'll respond within 24 hours</p>
                   </div>
                 </div>
 
@@ -206,9 +213,9 @@ const Contact = () => {
                     <MapPin className="h-6 w-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">Visit Us</h3>
-                    <p className="text-gray-600">123 Appliance Street<br />Tech City, TC 12345</p>
-                    <p className="text-sm text-gray-500">Main showroom location</p>
+                    <h3 className="font-semibold text-white">Visit Us</h3>
+                    <p className="text-gray-300">123 Appliance Street<br />Tech City, TC 12345</p>
+                    <p className="text-sm text-gray-400">Main showroom location</p>
                   </div>
                 </div>
 
@@ -217,8 +224,8 @@ const Contact = () => {
                     <Clock className="h-6 w-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">Business Hours</h3>
-                    <p className="text-gray-600">
+                    <h3 className="font-semibold text-white">Business Hours</h3>
+                    <p className="text-gray-300">
                       Mon-Fri: 8:00 AM - 8:00 PM<br />
                       Sat-Sun: 9:00 AM - 6:00 PM
                     </p>
@@ -245,23 +252,23 @@ const Contact = () => {
             </Card>
 
             {/* FAQ Card */}
-            <Card>
+            <Card className="bg-gray-800 border-gray-700">
               <CardHeader>
-                <CardTitle>Frequently Asked Questions</CardTitle>
+                <CardTitle className="text-white">Frequently Asked Questions</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-semibold text-gray-900">What's your return policy?</h4>
-                    <p className="text-sm text-gray-600">30-day returns on all items in original condition</p>
+                    <h4 className="font-semibold text-white">What's your return policy?</h4>
+                    <p className="text-sm text-gray-300">30-day returns on all items in original condition</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">Do you offer installation?</h4>
-                    <p className="text-sm text-gray-600">Yes, professional installation is available for most appliances</p>
+                    <h4 className="font-semibold text-white">Do you offer installation?</h4>
+                    <p className="text-sm text-gray-300">Yes, professional installation is available for most appliances</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">How long is the warranty?</h4>
-                    <p className="text-sm text-gray-600">All appliances come with manufacturer warranty plus our 5-year extended warranty</p>
+                    <h4 className="font-semibold text-white">How long is the warranty?</h4>
+                    <p className="text-sm text-gray-300">All appliances come with manufacturer warranty plus our 5-year extended warranty</p>
                   </div>
                 </div>
               </CardContent>

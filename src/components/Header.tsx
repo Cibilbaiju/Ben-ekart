@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -39,6 +38,7 @@ export const Header = () => {
     { name: "Furniture", href: "/category/furniture" },
     { name: "New Arrivals", href: "/offers" },
     { name: "Top Deals", href: "/offers" },
+    { name: "Contact Us", href: "/contact", icon: <MessageSquare className="mr-2 h-4 w-4" /> },
   ];
 
   const isActiveLink = (href: string) => {
