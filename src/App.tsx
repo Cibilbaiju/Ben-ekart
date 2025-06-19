@@ -22,6 +22,7 @@ import Refrigerators from "./pages/Refrigerators";
 import Microwaves from "./pages/Microwaves";
 import AirConditioners from "./pages/AirConditioners";
 import FurnitureCategory from "./pages/FurnitureCategory";
+import FindStore from "./pages/FindStore";
 
 const queryClient = new QueryClient();
 
