@@ -5,6 +5,7 @@ import { BestSellers } from "@/components/home/BestSellers";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { NewArrivals } from "@/components/home/NewArrivals";
 import { FurnitureCollection } from "@/components/home/FurnitureCollection";
+import { HorizontalScrollAnimation } from "@/components/HorizontalScrollAnimation";
 
 const Index = () => {
   return (
@@ -16,6 +17,10 @@ const Index = () => {
       <div className="py-8 md:py-12 bg-gray-900/50">
         <BestSellers />
       </div>
+      
+      {/* Horizontal Scroll Animation Section */}
+      <HorizontalScrollAnimation />
+      
       {/* --- Furniture Section Added Below --- */}
       <FurnitureCollection />
       {/* --- END Furniture Section --- */}
