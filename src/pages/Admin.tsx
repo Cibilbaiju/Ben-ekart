@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -79,31 +78,56 @@ const Admin = () => {
 
   const fetchOrders = async () => {
     try {
-      // Fetch orders with joined data from profiles and products tables
-      const { data: ordersData, error } = await supabase
+      // First fetch orders
+      const { data: ordersData, error: ordersError } = await supabase
         .from('orders')
-        .select(`
-          *,
-          profiles!orders_customer_id_fkey (
-            first_name,
-            last_name,
-            phone
-          ),
-          products!orders_product_id_fkey (
-            name,
-            description,
-            price
-          )
-        `)
+        .select('*')
         .order('order_date', { ascending: false });
 
-      if (error) {
-        console.error('Supabase error:', error);
-        throw error;
+      if (ordersError) {
+        console.error('Orders fetch error:', ordersError);
+        throw ordersError;
       }
 
-      console.log('Fetched orders data:', ordersData);
-      setOrders(ordersData || []);
+      if (!ordersData || ordersData.length === 0) {
+        setOrders([]);
+        setIsLoading(false);
+        return;
+      }
+
+      // Get unique customer and product IDs
+      const customerIds = [...new Set(ordersData.map(order => order.customer_id))];
+      const productIds = [...new Set(ordersData.map(order => order.product_id))];
+
+      // Fetch profiles
+      const { data: profilesData, error: profilesError } = await supabase
+        .from('profiles')
+        .select('id, first_name, last_name, phone')
+        .in('id', customerIds);
+
+      if (profilesError) {
+        console.error('Profiles fetch error:', profilesError);
+      }
+
+      // Fetch products
+      const { data: productsData, error: productsError } = await supabase
+        .from('products')
+        .select('id, name, description, price')
+        .in('id', productIds);
+
+      if (productsError) {
+        console.error('Products fetch error:', productsError);
+      }
+
+      // Combine the data
+      const ordersWithDetails = ordersData.map(order => ({
+        ...order,
+        profiles: profilesData?.find(profile => profile.id === order.customer_id) || null,
+        products: productsData?.find(product => product.id === order.product_id) || null
+      }));
+
+      console.log('Combined orders data:', ordersWithDetails);
+      setOrders(ordersWithDetails);
     } catch (error: any) {
       console.error('Error fetching orders:', error);
       toast({
