@@ -27,10 +27,21 @@ export function HeroCarousel() {
         <CarouselContent>
           {carouselImages.map((image, index) => (
             <CarouselItem key={index}>
-              {/* Set height a bit larger than before but not full screen */}
               <div className="relative w-full h-[90vh] aspect-auto overflow-hidden transition-all">
                 <img src={image.src} alt={image.alt} className="w-full h-full object-cover" />
-                {/* "Shop Now" button removed, leaving just the image and overlay structure */}
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <h1 className="text-4xl md:text-6xl font-bold mb-4">
+                      Premium Home Appliances
+                    </h1>
+                    <p className="text-xl mb-8 max-w-2xl mx-auto">
+                      Discover our exclusive collection of energy-efficient, smart home appliances
+                    </p>
+                    <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg">
+                      Shop Now
+                    </Button>
+                  </div>
+                </div>
               </div>
             </CarouselItem>
           ))}
@@ -43,4 +54,3 @@ export function HeroCarousel() {
     </section>
   )
 }
-
