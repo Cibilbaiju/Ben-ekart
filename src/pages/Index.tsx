@@ -7,8 +7,8 @@ import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { NewArrivals } from "@/components/home/NewArrivals";
 import { BestSellers } from "@/components/home/BestSellers";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 import { Shield, LogIn } from "lucide-react";
 
 const Index = () => {
