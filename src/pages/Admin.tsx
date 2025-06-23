@@ -79,21 +79,17 @@ const Admin = () => {
 
   const fetchOrders = async () => {
     try {
+      // Fetch orders with joined data from profiles and products tables
       const { data: ordersData, error } = await supabase
         .from('orders')
         .select(`
-          id,
-          quantity,
-          total_amount,
-          status,
-          order_date,
-          customer_id,
-          profiles (
+          *,
+          profiles!orders_customer_id_fkey (
             first_name,
             last_name,
             phone
           ),
-          products (
+          products!orders_product_id_fkey (
             name,
             description,
             price
@@ -101,9 +97,15 @@ const Admin = () => {
         `)
         .order('order_date', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+
+      console.log('Fetched orders data:', ordersData);
       setOrders(ordersData || []);
     } catch (error: any) {
+      console.error('Error fetching orders:', error);
       toast({
         title: "Error",
         description: "Failed to load orders",
