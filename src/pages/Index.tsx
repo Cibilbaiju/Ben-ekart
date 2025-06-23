@@ -2,11 +2,11 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import HeroSection from "@/components/home/HeroSection";
-import CategoryGrid from "@/components/home/CategoryGrid";
-import NewArrivals from "@/components/home/NewArrivals";
-import BestSellers from "@/components/home/BestSellers";
-import WhyChooseUs from "@/components/home/WhyChooseUs";
+import { HeroSection } from "@/components/home/HeroSection";
+import { CategoryGrid } from "@/components/home/CategoryGrid";
+import { NewArrivals } from "@/components/home/NewArrivals";
+import { BestSellers } from "@/components/home/BestSellers";
+import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Shield, LogIn } from "lucide-react";
