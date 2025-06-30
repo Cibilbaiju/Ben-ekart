@@ -17,7 +17,7 @@ import {
   Tv,
 } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
-// --------- Add NavigationMenu import from shadcn/ui ---------
+import { useAuth } from "@/contexts/AuthContext";
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -30,6 +30,7 @@ export const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
   const itemCount = useCartStore((state) => state.items.reduce((sum, item) => sum + item.quantity, 0));
+  const { user } = useAuth();
 
   // Central navigation menu items
   const navigation = [
@@ -101,10 +102,17 @@ export const Header = () => {
 
           {/* Right side actions */}
           <div className="flex items-center space-x-4 md:space-x-6">
-            <Link to="/account" className="hidden md:flex items-center space-x-2 text-sm font-medium hover:text-white">
+            {user ? (
+              <Link to="/dashboard" className="hidden md:flex items-center space-x-2 text-sm font-medium hover:text-white">
+                <User className="h-6 w-6" />
+                <span>Dashboard</span>
+              </Link>
+            ) : (
+              <Link to="/auth" className="hidden md:flex items-center space-x-2 text-sm font-medium hover:text-white">
                 <User className="h-6 w-6" />
                 <span>Sign In</span>
-            </Link>
+              </Link>
+            )}
             <Link to="/cart" className="flex items-center space-x-2 text-sm font-medium hover:text-white relative">
               <ShoppingCart className="h-6 w-6" />
               <span className="hidden md:inline">Cart</span>
@@ -126,7 +134,7 @@ export const Header = () => {
         </div>
       </div>
       
-      {/* --- NEW: Navigation Menu using shadcn/ui --- */}
+      {/* Navigation Menu using shadcn/ui */}
       <nav className="hidden md:flex bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t border-gray-700">
         <div className="container mx-auto px-4">
           <NavigationMenu>
@@ -141,7 +149,6 @@ export const Header = () => {
                           : "text-gray-300"
                       }`}
                   >
-                      {/* Optionally render icon for TV */}
                       {item.icon && item.icon}
                       {item.name}
                   </Link>
@@ -185,10 +192,17 @@ export const Header = () => {
               ))}
             </nav>
              <div className="border-t border-gray-700 mt-4 pt-4 space-y-4">
-                <Link to="/account" onClick={() => setIsMenuOpen(false)} className="flex items-center space-x-2 text-base font-medium hover:text-primary">
-                    <User className="h-6 w-6" />
-                    <span>Sign In / My Account</span>
-                </Link>
+                {user ? (
+                  <Link to="/dashboard" onClick={() => setIsMenuOpen(false)} className="flex items-center space-x-2 text-base font-medium hover:text-primary">
+                      <User className="h-6 w-6" />
+                      <span>Dashboard</span>
+                  </Link>
+                ) : (
+                  <Link to="/auth" onClick={() => setIsMenuOpen(false)} className="flex items-center space-x-2 text-base font-medium hover:text-primary">
+                      <User className="h-6 w-6" />
+                      <span>Sign In / Sign Up</span>
+                  </Link>
+                )}
              </div>
           </div>
         </div>
