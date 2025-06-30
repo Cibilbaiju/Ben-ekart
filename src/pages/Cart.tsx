@@ -1,3 +1,5 @@
+
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -5,12 +7,46 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useCartStore } from "@/store/cartStore";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft, Star, ShoppingCart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { items, totalItems, totalPrice, updateQuantity, removeItem, clearCart } = useCartStore();
   const { toast } = useToast();
+  const { user, isLoading } = useAuth();
+  const navigate = useNavigate();
+
+  // Check authentication on component mount
+  useEffect(() => {
+    if (!isLoading && !user) {
+      toast({
+        title: "Sign In Required",
+        description: "Please sign in to view your cart.",
+        variant: "destructive"
+      });
+      navigate('/auth');
+    }
+  }, [user, isLoading, navigate, toast]);
+
+  // Show loading while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-800 flex items-center justify-center">
+        <div className="text-center animate-fade-in">
+          <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-purple-950/80 rounded-full w-32 h-32 flex items-center justify-center mx-auto mb-8 shadow-2xl">
+            <ShoppingBag className="h-16 w-16 text-white" />
+          </div>
+          <h2 className="text-4xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text mb-4">Loading...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render cart if user is not authenticated
+  if (!user) {
+    return null;
+  }
 
   const handleQuantityChange = (id: string, newQuantity: number) => {
     updateQuantity(id, newQuantity);

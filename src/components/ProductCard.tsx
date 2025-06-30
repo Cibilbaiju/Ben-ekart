@@ -5,7 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Star, ShoppingCart, Heart, Eye, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ProductCardProps {
   id: string;
@@ -39,6 +41,8 @@ export const ProductCard = ({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const addItem = useCartStore((state) => state.addItem);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   // Ensure we have at least one image
   const productImages = images.length > 0 ? images : [image];
@@ -50,6 +54,17 @@ export const ProductCard = ({
   const discount = safeOriginalPrice && safePrice ? Math.round(((safeOriginalPrice - safePrice) / safeOriginalPrice) * 100) : 0;
 
   const handleAddToCart = () => {
+    // Check if user is authenticated
+    if (!user) {
+      toast({
+        title: "Sign In Required",
+        description: "Please sign in to add items to your cart.",
+        variant: "destructive"
+      });
+      navigate('/auth');
+      return;
+    }
+
     addItem({
       id,
       name,
@@ -65,6 +80,16 @@ export const ProductCard = ({
   };
 
   const handleToggleLike = () => {
+    if (!user) {
+      toast({
+        title: "Sign In Required",
+        description: "Please sign in to add items to your wishlist.",
+        variant: "destructive"
+      });
+      navigate('/auth');
+      return;
+    }
+
     setIsLiked(!isLiked);
     toast({
       title: isLiked ? "Removed from Wishlist" : "Added to Wishlist",

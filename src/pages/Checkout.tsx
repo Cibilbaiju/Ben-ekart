@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,12 +8,14 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useCartStore } from "@/store/cartStore";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import { MapPin, Truck, CreditCard, Shield, ArrowLeft, Store, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const { items, totalPrice, clearCart } = useCartStore();
   const { toast } = useToast();
+  const { user, isLoading } = useAuth();
   const navigate = useNavigate();
   
   const [currentStep, setCurrentStep] = useState(1);
@@ -41,6 +43,18 @@ const Checkout = () => {
 
   const [pincodeValid, setPincodeValid] = useState<boolean | null>(null);
   const [deliveryDate, setDeliveryDate] = useState<string>("");
+
+  // Check authentication on component mount
+  useEffect(() => {
+    if (!isLoading && !user) {
+      toast({
+        title: "Sign In Required",
+        description: "Please sign in to proceed to checkout.",
+        variant: "destructive"
+      });
+      navigate('/auth');
+    }
+  }, [user, isLoading, navigate, toast]);
 
   const stores = [
     { id: "mumbai-1", name: "BEN Store - Bandra", address: "Shop 15, Linking Road, Bandra West, Mumbai" },
@@ -108,6 +122,20 @@ const Checkout = () => {
     clearCart();
     navigate("/order-confirmation");
   };
+
+  // Show loading while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-800 flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
+
+  // Don't render checkout if user is not authenticated
+  if (!user) {
+    return null;
+  }
 
   if (items.length === 0) {
     return (
