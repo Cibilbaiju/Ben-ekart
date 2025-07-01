@@ -1,4 +1,3 @@
-
 import { HeroSection } from "@/components/home/HeroSection";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { NewArrivals } from "@/components/home/NewArrivals";
@@ -6,6 +5,7 @@ import { BestSellers } from "@/components/home/BestSellers";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { SaleOffer } from "@/components/home/SaleOffer";
 
 const Index = () => {
   return (
@@ -20,13 +20,16 @@ const Index = () => {
         </div>
         
         {/* Main content sections with improved spacing and backgrounds */}
-        <div className="relative z-10 space-y-12 md:space-y-16">
+        <div className="relative z-10 space-y-0">
           <CategoryGrid />
           
           {/* Enhanced section separators */}
           <div className="bg-gradient-to-r from-muted/20 via-muted/40 to-muted/20 py-12 md:py-16">
             <NewArrivals />
           </div>
+          
+          {/* Sale Offer Section */}
+          <SaleOffer />
           
           <div className="bg-gradient-to-r from-background via-muted/10 to-background py-12 md:py-16">
             <BestSellers />

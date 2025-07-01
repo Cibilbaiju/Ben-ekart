@@ -143,6 +143,11 @@
     animation: float 3s ease-in-out infinite;
   }
 
+  .animate-float-delayed {
+    animation: float 3s ease-in-out infinite;
+    animation-delay: 1.5s;
+  }
+
   .animate-shimmer {
     background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--muted-foreground)) 50%, hsl(var(--muted)) 75%);
     background-size: 200px 100%;
@@ -156,6 +161,11 @@
   .animate-gradient {
     background-size: 400% 400%;
     animation: gradient-shift 6s ease infinite;
+  }
+
+  .animate-gradient-fast {
+    background-size: 200% 200%;
+    animation: gradient-shift-fast 3s ease infinite;
   }
 
   /* Line clamp utility */
@@ -254,6 +264,32 @@
   .horizontal-scroll {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+  }
+
+  /* Enhanced card hover effects for categories */
+  .category-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .category-card:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Smooth scrolling for category container */
+  .category-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .category-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Enhanced focus states for better accessibility */
+  .category-card:focus {
+    outline: 3px solid hsl(var(--ring));
+    outline-offset: 2px;
   }
 }
 

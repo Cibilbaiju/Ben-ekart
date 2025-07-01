@@ -33,127 +33,127 @@ const categories = [
   {
     name: "Washing Machines",
     icon: Waves,
-    color: "from-blue-500 to-blue-600",
-    route: "/category/washing-machines"
+    color: "from-blue-500 to-cyan-500",
+    route: "/washing-machines"
   },
   {
     name: "Tablets",
     icon: Tv,
-    color: "from-gray-600 to-gray-700",
+    color: "from-gray-600 to-slate-700",
     route: "/category/tablets"
   },
   {
     name: "Wearables",
     icon: Watch,
-    color: "from-purple-500 to-purple-600",
+    color: "from-purple-500 to-pink-500",
     route: "/category/wearables"
   },
   {
     name: "Kitchen Appliances",
     icon: ChefHat,
-    color: "from-orange-500 to-orange-600",
+    color: "from-orange-500 to-red-500",
     route: "/category/kitchen-appliances"
   },
   {
-    name: "Home Theatres & Soundbars",
+    name: "Home Theatre",
     icon: Volume2,
-    color: "from-red-500 to-red-600",
+    color: "from-red-500 to-rose-600",
     route: "/category/home-theatre"
   },
   {
     name: "Grooming",
     icon: Scissors,
-    color: "from-green-500 to-green-600",
+    color: "from-green-500 to-emerald-600",
     route: "/category/grooming"
   },
   {
     name: "Microwaves",
     icon: Microwave,
-    color: "from-yellow-500 to-yellow-600",
-    route: "/category/microwaves"
+    color: "from-yellow-500 to-amber-600",
+    route: "/microwaves"
   },
   {
-    name: "Speakers & Media Players",
+    name: "Speakers",
     icon: Headphones,
-    color: "from-indigo-500 to-indigo-600",
+    color: "from-indigo-500 to-blue-600",
     route: "/category/speakers"
   },
   {
     name: "Cameras",
     icon: Camera,
-    color: "from-pink-500 to-pink-600",
+    color: "from-pink-500 to-purple-600",
     route: "/category/cameras"
   },
   {
     name: "Fans",
     icon: Fan,
-    color: "from-cyan-500 to-cyan-600",
+    color: "from-cyan-500 to-teal-600",
     route: "/category/fans"
   },
   {
     name: "Televisions",
     icon: Tv,
-    color: "from-slate-600 to-slate-700",
-    route: "/category/televisions"
+    color: "from-slate-600 to-gray-800",
+    route: "/televisions"
   },
   {
     name: "Refrigerators",
     icon: Refrigerator,
-    color: "from-teal-500 to-teal-600",
-    route: "/category/refrigerators"
+    color: "from-teal-500 to-green-600",
+    route: "/refrigerators"
   },
   {
     name: "Air Conditioners",
     icon: Wind,
-    color: "from-blue-400 to-blue-500",
-    route: "/category/air-conditioners"
+    color: "from-blue-400 to-cyan-500",
+    route: "/air-conditioners"
   },
   {
     name: "Coffee Machines",
     icon: Coffee,
-    color: "from-amber-600 to-amber-700",
+    color: "from-amber-600 to-orange-700",
     route: "/category/coffee-machines"
   },
   {
     name: "Cookware",
     icon: UtensilsCrossed,
-    color: "from-gray-500 to-gray-600",
+    color: "from-gray-500 to-slate-600",
     route: "/category/cookware"
   },
   {
     name: "Crockery",
     icon: Wine,
-    color: "from-rose-500 to-rose-600",
+    color: "from-rose-500 to-pink-600",
     route: "/category/crockery"
   },
   {
     name: "Furniture",
     icon: Sofa,
-    color: "from-brown-500 to-brown-600",
-    route: "/category/furniture"
+    color: "from-brown-500 to-amber-700",
+    route: "/furniture"
   },
   {
     name: "Wardrobe",
     icon: Shirt,
-    color: "from-emerald-500 to-emerald-600",
+    color: "from-emerald-500 to-green-600",
     route: "/category/wardrobe"
   },
   {
     name: "Small Appliances",
     icon: Zap,
-    color: "from-violet-500 to-violet-600",
+    color: "from-violet-500 to-purple-600",
     route: "/category/small-appliances"
   },
   {
     name: "Home Decor",
     icon: Home,
-    color: "from-lime-500 to-lime-600",
+    color: "from-lime-500 to-green-600",
     route: "/category/home-decor"
   },
   {
     name: "Lighting",
     icon: Lightbulb,
-    color: "from-yellow-400 to-yellow-500",
+    color: "from-yellow-400 to-amber-500",
     route: "/category/lighting"
   }
 ];
@@ -165,10 +165,8 @@ export const CategoryGrid = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Set initial states
       gsap.set(titleRef.current, { opacity: 0, y: 30 });
 
-      // Title animation
       gsap.to(titleRef.current, {
         opacity: 1,
         y: 0,
@@ -181,85 +179,128 @@ export const CategoryGrid = () => {
           toggleActions: "play none none reverse"
         }
       });
-
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    let isDown = false;
+    let startX: number;
+    let scrollLeft: number;
+
+    const handleMouseDown = (e: MouseEvent) => {
+      isDown = true;
+      container.style.cursor = 'grabbing';
+      startX = e.pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+    };
+
+    const handleMouseLeave = () => {
+      isDown = false;
+      container.style.cursor = 'grab';
+    };
+
+    const handleMouseUp = () => {
+      isDown = false;
+      container.style.cursor = 'grab';
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const walk = (x - startX) * 2;
+      container.scrollLeft = scrollLeft - walk;
+    };
+
+    container.addEventListener('mousedown', handleMouseDown);
+    container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('mouseup', handleMouseUp);
+    container.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      container.removeEventListener('mousedown', handleMouseDown);
+      container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('mouseup', handleMouseUp);
+      container.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
   return (
-    <section ref={sectionRef} className="py-8 bg-background">
+    <section ref={sectionRef} className="py-12 bg-gradient-to-br from-background via-muted/5 to-background">
       <div className="container mx-auto px-4">
         <div ref={titleRef} className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
             Shop by Category
           </h2>
           <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-            Discover our comprehensive range of premium products
+            Discover our comprehensive range of premium products across all categories
           </p>
         </div>
         
-        {/* Horizontal Scrollable Category Grid */}
-        <div className="relative">
+        <div className="relative group">
           <div 
             ref={scrollContainerRef}
-            className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide pb-4 px-2"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 px-2 cursor-grab select-none scroll-smooth"
+            style={{ 
+              scrollbarWidth: 'none', 
+              msOverflowStyle: 'none',
+              scrollBehavior: 'smooth'
+            }}
           >
             {categories.map((category, index) => (
               <Link
                 key={category.name}
                 to={category.route}
-                className="flex-shrink-0 group"
+                className="flex-shrink-0 group/item"
               >
-                <div className="flex flex-col items-center space-y-3 min-w-[100px] md:min-w-[120px]">
-                  {/* Circular Icon Container */}
-                  <div className={`
-                    relative w-16 h-16 md:w-20 md:h-20 rounded-full 
-                    bg-gradient-to-br ${category.color} 
-                    flex items-center justify-center 
-                    shadow-lg group-hover:shadow-xl 
-                    transition-all duration-300 
-                    group-hover:scale-110 
-                    group-hover:-translate-y-1
-                    border-4 border-white/20
-                  `}>
-                    <category.icon className="h-7 w-7 md:h-9 md:w-9 text-white" />
-                    
-                    {/* Subtle glow effect */}
+                <Card className="relative overflow-hidden bg-gradient-to-br from-white/50 to-white/30 backdrop-blur-sm border border-white/20 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 min-w-[120px] max-w-[120px]">
+                  <CardContent className="p-4 flex flex-col items-center space-y-3">
                     <div className={`
-                      absolute inset-0 rounded-full 
+                      relative w-14 h-14 rounded-2xl 
                       bg-gradient-to-br ${category.color} 
-                      opacity-0 group-hover:opacity-30 
-                      transition-opacity duration-300 
-                      blur-sm scale-110
-                    `} />
-                  </div>
+                      flex items-center justify-center 
+                      shadow-lg group-hover/item:shadow-xl 
+                      transition-all duration-300 
+                      group-hover/item:rotate-6
+                      border-2 border-white/30
+                    `}>
+                      <category.icon className="h-7 w-7 text-white drop-shadow-sm" />
+                      
+                      <div className={`
+                        absolute inset-0 rounded-2xl 
+                        bg-gradient-to-br ${category.color} 
+                        opacity-0 group-hover/item:opacity-50 
+                        transition-opacity duration-300 
+                        blur-lg scale-110
+                      `} />
+                    </div>
+                    
+                    <div className="text-center">
+                      <h3 className="font-semibold text-foreground text-xs leading-tight max-w-[90px] line-clamp-2 group-hover/item:text-primary transition-colors duration-300">
+                        {category.name}
+                      </h3>
+                    </div>
+                  </CardContent>
                   
-                  {/* Category Name */}
-                  <div className="text-center">
-                    <h3 className="font-medium text-foreground text-xs md:text-sm leading-tight max-w-[90px] md:max-w-[110px] line-clamp-2 group-hover:text-primary transition-colors duration-300">
-                      {category.name}
-                    </h3>
-                  </div>
-                </div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/5 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300" />
+                </Card>
               </Link>
             ))}
           </div>
           
-          {/* Gradient Fade Effects */}
-          <div className="absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-background to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+          <div className="absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-background via-background/80 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-background via-background/80 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
         
-        {/* Navigation Dots Indicator */}
-        <div className="flex justify-center mt-6 space-x-2">
-          {Array.from({ length: Math.ceil(categories.length / 8) }).map((_, i) => (
-            <div
-              key={i}
-              className="w-2 h-2 rounded-full bg-muted-foreground/30 transition-colors duration-300"
-            />
-          ))}
+        <div className="flex justify-center mt-6">
+          <div className="text-xs text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
+            Scroll horizontally to see more categories
+          </div>
         </div>
       </div>
     </section>
