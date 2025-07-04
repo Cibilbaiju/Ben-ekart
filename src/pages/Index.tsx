@@ -2,7 +2,7 @@
 import { HeroSection } from "@/components/home/HeroSection";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { NewArrivals } from "@/components/home/NewArrivals";
-import { OffersSection } from "@/components/home/OffersSection";
+import { PayDayOffer } from "@/components/home/PayDayOffer";
 import { BestSellers } from "@/components/home/BestSellers";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { Footer } from "@/components/Footer";
@@ -29,8 +29,8 @@ const Index = () => {
             <NewArrivals />
           </div>
           
-          {/* Offers Section - Now placed after New Arrivals */}
-          <OffersSection />
+          {/* Pay Day Special Offer - Replaces the previous OffersSection */}
+          <PayDayOffer />
           
           <div className="bg-gradient-to-r from-background via-muted/10 to-background py-12 md:py-16">
             <BestSellers />
