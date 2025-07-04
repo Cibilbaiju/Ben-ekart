@@ -161,146 +161,88 @@ const categories = [
 export const CategoryGrid = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set(titleRef.current, { opacity: 0, y: 30 });
+      gsap.set([titleRef.current, gridRef.current], { opacity: 0, y: 30 });
 
-      gsap.to(titleRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: "power3.out",
+      const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top 85%",
-          end: "bottom 15%",
+          trigger: sectionRef.current,
+          start: "top 80%",
+          end: "bottom 20%",
           toggleActions: "play none none reverse"
         }
       });
+
+      tl.to(titleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power3.out"
+      })
+      .to(gridRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      }, "-=0.3");
+
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    let isDown = false;
-    let startX: number;
-    let scrollLeft: number;
-
-    const handleMouseDown = (e: MouseEvent) => {
-      isDown = true;
-      container.style.cursor = 'grabbing';
-      startX = e.pageX - container.offsetLeft;
-      scrollLeft = container.scrollLeft;
-    };
-
-    const handleMouseLeave = () => {
-      isDown = false;
-      container.style.cursor = 'grab';
-    };
-
-    const handleMouseUp = () => {
-      isDown = false;
-      container.style.cursor = 'grab';
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - container.offsetLeft;
-      const walk = (x - startX) * 2;
-      container.scrollLeft = scrollLeft - walk;
-    };
-
-    container.addEventListener('mousedown', handleMouseDown);
-    container.addEventListener('mouseleave', handleMouseLeave);
-    container.addEventListener('mouseup', handleMouseUp);
-    container.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      container.removeEventListener('mousedown', handleMouseDown);
-      container.removeEventListener('mouseleave', handleMouseLeave);
-      container.removeEventListener('mouseup', handleMouseUp);
-      container.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
   return (
-    <section ref={sectionRef} className="py-12 bg-gradient-to-br from-background via-muted/5 to-background">
+    <section ref={sectionRef} className="py-16 bg-gradient-to-br from-background via-muted/10 to-background">
       <div className="container mx-auto px-4">
-        <div ref={titleRef} className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+        <div ref={titleRef} className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Shop by Category
           </h2>
-          <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Discover our comprehensive range of premium products across all categories
           </p>
         </div>
         
-        <div className="relative group">
-          <div 
-            ref={scrollContainerRef}
-            className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 px-2 cursor-grab select-none scroll-smooth"
-            style={{ 
-              scrollbarWidth: 'none', 
-              msOverflowStyle: 'none',
-              scrollBehavior: 'smooth'
-            }}
-          >
-            {categories.map((category, index) => (
-              <Link
-                key={category.name}
-                to={category.route}
-                className="flex-shrink-0 group/item"
-              >
-                <Card className="relative overflow-hidden bg-gradient-to-br from-white/50 to-white/30 backdrop-blur-sm border border-white/20 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 min-w-[120px] max-w-[120px]">
-                  <CardContent className="p-4 flex flex-col items-center space-y-3">
-                    <div className={`
-                      relative w-14 h-14 rounded-2xl 
-                      bg-gradient-to-br ${category.color} 
-                      flex items-center justify-center 
-                      shadow-lg group-hover/item:shadow-xl 
-                      transition-all duration-300 
-                      group-hover/item:rotate-6
-                      border-2 border-white/30
-                    `}>
-                      <category.icon className="h-7 w-7 text-white drop-shadow-sm" />
-                      
-                      <div className={`
-                        absolute inset-0 rounded-2xl 
-                        bg-gradient-to-br ${category.color} 
-                        opacity-0 group-hover/item:opacity-50 
-                        transition-opacity duration-300 
-                        blur-lg scale-110
-                      `} />
-                    </div>
+        <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">
+          {categories.map((category, index) => (
+            <Link
+              key={category.name}
+              to={category.route}
+              className="group block"
+            >
+              <Card className="hover-lift bg-gradient-to-br from-card via-card to-muted/20 border border-border/50 shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:border-primary/20">
+                <CardContent className="p-6 flex flex-col items-center space-y-4">
+                  <div className={`
+                    relative w-16 h-16 rounded-full 
+                    bg-gradient-to-br ${category.color} 
+                    flex items-center justify-center 
+                    shadow-lg group-hover:shadow-xl 
+                    transition-all duration-300 
+                    group-hover:scale-110
+                  `}>
+                    <category.icon className="h-8 w-8 text-white" />
                     
-                    <div className="text-center">
-                      <h3 className="font-semibold text-foreground text-xs leading-tight max-w-[90px] line-clamp-2 group-hover/item:text-primary transition-colors duration-300">
-                        {category.name}
-                      </h3>
-                    </div>
-                  </CardContent>
+                    <div className={`
+                      absolute inset-0 rounded-full 
+                      bg-gradient-to-br ${category.color} 
+                      opacity-0 group-hover:opacity-30 
+                      transition-opacity duration-300 
+                      blur-lg scale-125
+                    `} />
+                  </div>
                   
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/5 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300" />
-                </Card>
-              </Link>
-            ))}
-          </div>
-          
-          <div className="absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-background via-background/80 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-background via-background/80 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        </div>
-        
-        <div className="flex justify-center mt-6">
-          <div className="text-xs text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
-            Scroll horizontally to see more categories
-          </div>
+                  <div className="text-center">
+                    <h3 className="font-semibold text-foreground text-sm leading-tight group-hover:text-primary transition-colors duration-300">
+                      {category.name}
+                    </h3>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

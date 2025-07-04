@@ -1,11 +1,12 @@
+
 import { HeroSection } from "@/components/home/HeroSection";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { NewArrivals } from "@/components/home/NewArrivals";
+import { OffersSection } from "@/components/home/OffersSection";
 import { BestSellers } from "@/components/home/BestSellers";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { SaleOffer } from "@/components/home/SaleOffer";
 
 const Index = () => {
   return (
@@ -28,8 +29,8 @@ const Index = () => {
             <NewArrivals />
           </div>
           
-          {/* Sale Offer Section */}
-          <SaleOffer />
+          {/* Offers Section - Now placed after New Arrivals */}
+          <OffersSection />
           
           <div className="bg-gradient-to-r from-background via-muted/10 to-background py-12 md:py-16">
             <BestSellers />
