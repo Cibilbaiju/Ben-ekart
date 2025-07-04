@@ -12,36 +12,36 @@ const FindStore = () => {
   const stores = [
     {
       id: 1,
-      name: "BEN Store - Mumbai Central",
-      address: "Shop 15, Linking Road, Bandra West, Mumbai - 400050",
+      name: "BEN Home Ambitions - Pallikkara",
+      address: "Main Road, Pallikkara, Ernakulam District, Kerala - 683515",
       phone: "+91 98765 43210",
-      hours: "Mon-Sun: 10:00 AM - 9:00 PM",
-      rating: 4.5,
-      reviews: 324,
-      googleMapsUrl: "https://maps.google.com/?q=Bandra+West+Mumbai",
-      googleReviewUrl: "https://www.google.com/search?q=BEN+Store+Mumbai+reviews"
+      hours: "Mon-Sun: 9:00 AM - 8:00 PM",
+      rating: 4.6,
+      reviews: 128,
+      googleMapsUrl: "https://maps.google.com/?q=Pallikkara+Ernakulam+Kerala",
+      googleReviewUrl: "https://www.google.com/search?q=BEN+Home+Ambitions+Pallikkara+reviews"
     },
     {
       id: 2,
-      name: "BEN Store - Delhi CP",
-      address: "Block A-12, Connaught Place, New Delhi - 110001",
+      name: "BEN Home Ambitions - Mannoor",
+      address: "NH 47, Mannoor, Alappuzha District, Kerala - 688541",
       phone: "+91 98765 43211",
-      hours: "Mon-Sun: 10:00 AM - 9:00 PM",
-      rating: 4.7,
-      reviews: 456,
-      googleMapsUrl: "https://maps.google.com/?q=Connaught+Place+Delhi",
-      googleReviewUrl: "https://www.google.com/search?q=BEN+Store+Delhi+reviews"
+      hours: "Mon-Sun: 9:00 AM - 8:00 PM",
+      rating: 4.5,
+      reviews: 95,
+      googleMapsUrl: "https://maps.google.com/?q=Mannoor+Alappuzha+Kerala",
+      googleReviewUrl: "https://www.google.com/search?q=BEN+Home+Ambitions+Mannoor+reviews"
     },
     {
       id: 3,
-      name: "BEN Store - Bangalore Koramangala",
-      address: "80 Feet Road, Koramangala 4th Block, Bangalore - 560034",
+      name: "BEN Home Ambitions - Karimugal",
+      address: "Karimugal Junction, Karimugal, Ernakulam District, Kerala - 683574",
       phone: "+91 98765 43212",
-      hours: "Mon-Sun: 10:00 AM - 9:00 PM",
-      rating: 4.6,
-      reviews: 278,
-      googleMapsUrl: "https://maps.google.com/?q=Koramangala+Bangalore",
-      googleReviewUrl: "https://www.google.com/search?q=BEN+Store+Bangalore+reviews"
+      hours: "Mon-Sun: 9:00 AM - 8:00 PM",
+      rating: 4.7,
+      reviews: 156,
+      googleMapsUrl: "https://maps.google.com/?q=Karimugal+Ernakulam+Kerala",
+      googleReviewUrl: "https://www.google.com/search?q=BEN+Home+Ambitions+Karimugal+reviews"
     }
   ];
 
@@ -114,10 +114,10 @@ const FindStore = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="page-header text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-            Find Our Stores
+            Visit Our Showrooms
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Visit our premium appliance stores for hands-on experience and expert assistance
+            Experience premium home appliances at BEN Home Ambitions showrooms across Kerala
           </p>
         </div>
 
@@ -185,7 +185,7 @@ const FindStore = () => {
                     onClick={() => window.open(store.googleReviewUrl, '_blank')}
                   >
                     <Star className="h-4 w-4 mr-2" />
-                    Write a Google Review
+                    Rate Us on Google
                     <ExternalLink className="h-4 w-4 ml-2" />
                   </Button>
                 </div>
@@ -197,9 +197,9 @@ const FindStore = () => {
         <div className="mt-16 text-center">
           <Card className="bg-gradient-to-r from-blue-900/50 to-purple-900/50 border border-blue-500/30 backdrop-blur-lg max-w-2xl mx-auto">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-bold mb-4 text-gray-100">Can't Find a Store Near You?</h3>
+              <h3 className="text-2xl font-bold mb-4 text-gray-100">Can't Visit Our Showroom?</h3>
               <p className="text-gray-300 mb-6">
-                We offer nationwide delivery for all our premium appliances. Shop online and get your products delivered to your doorstep.
+                We offer home delivery across Kerala for all our premium appliances. Shop online and get your products delivered to your doorstep with expert installation.
               </p>
               <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3">
                 Shop Online Now
