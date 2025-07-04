@@ -118,6 +118,56 @@
     -webkit-backface-visibility: hidden;
   }
 
+  /* Responsive Product Grid */
+  .responsive-product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 products per row on mobile */
+    gap: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    .responsive-product-grid {
+      grid-template-columns: repeat(4, 1fr); /* 4 products per row on laptop */
+    }
+  }
+
+  /* Category Section Glowing Effect */
+  .category-glow-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .category-glow-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .category-card-glow {
+    position: relative;
+  }
+
+  .category-card-glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .category-card-glow:hover::after {
+    opacity: 1;
+  }
+
   /* Custom animations */
   @keyframes float {
     0%, 100% { transform: translateY(0px); }

@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import gsap from "gsap";
@@ -53,14 +54,29 @@ export const BestSellers = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const productsRef = useRef<HTMLDivElement[]>([]);
+  const carouselTitleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Set initial states
-      gsap.set(titleRef.current, { opacity: 0, y: 50 });
+      gsap.set([titleRef.current, carouselTitleRef.current], { opacity: 0, y: 50 });
       gsap.set(productsRef.current, { opacity: 0, y: 80, rotationY: 15 });
 
-      // Title animation
+      // Carousel title animation
+      gsap.to(carouselTitleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: carouselTitleRef.current,
+          start: "top 80%",
+          end: "bottom 20%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      // Best Sellers title animation
       gsap.to(titleRef.current, {
         opacity: 1,
         y: 0,
@@ -98,9 +114,20 @@ export const BestSellers = () => {
   return (
     <section ref={sectionRef} className="py-16 bg-background">
       <div className="container mx-auto px-4">
-        {/* --- Insert Carousel BEFORE the Best Sellers heading --- */}
+        {/* All Bank Offers Carousel with heading */}
+        <div ref={carouselTitleRef} className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            All Bank Offers
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+            Exclusive deals and discounts available with all major banks
+          </p>
+        </div>
+        
         <AutoPhotoCarousel />
-        <div ref={titleRef} className="text-center mb-12">
+        
+        {/* Best Sellers Section */}
+        <div ref={titleRef} className="text-center mb-12 mt-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Best Sellers
           </h2>
@@ -109,7 +136,7 @@ export const BestSellers = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="responsive-product-grid gap-6">
           {bestSellers.map((product, index) => (
             <div 
               key={product.id}

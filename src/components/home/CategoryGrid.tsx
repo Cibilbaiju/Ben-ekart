@@ -189,7 +189,7 @@ export const CategoryGrid = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 bg-gradient-to-br from-background via-muted/10 to-background">
+    <section ref={sectionRef} className="py-8 bg-gradient-to-br from-background via-muted/10 to-background category-glow-section">
       <div className="container mx-auto px-4">
         <div ref={titleRef} className="text-center mb-6">
           <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">
@@ -216,7 +216,7 @@ export const CategoryGrid = () => {
                 to={category.route}
                 className="group block flex-shrink-0"
               >
-                <Card className="hover-lift bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border border-blue-200/50 dark:border-blue-700/50 shadow-sm hover:shadow-md transition-all duration-300 group-hover:border-blue-300/70 dark:group-hover:border-blue-600/70 w-24 h-24 md:w-28 md:h-28">
+                <Card className="hover-lift bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border border-blue-200/50 dark:border-blue-700/50 shadow-sm hover:shadow-md transition-all duration-300 group-hover:border-blue-300/70 dark:group-hover:border-blue-600/70 w-24 h-24 md:w-28 md:h-28 category-card-glow">
                   <CardContent className="p-3 flex flex-col items-center justify-center space-y-2 h-full">
                     <div className="relative w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:scale-110">
                       <category.icon className="h-4 w-4 md:h-5 md:w-5 text-white" />

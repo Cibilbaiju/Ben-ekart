@@ -111,7 +111,7 @@ export const NewArrivals = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="responsive-product-grid gap-6">
           {newArrivals.map((product, index) => (
             <div 
               key={product.id}
