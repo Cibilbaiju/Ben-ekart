@@ -19,12 +19,12 @@ const categories = [
 export const CategoryGrid = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const categoriesRef = useRef<HTMLDivElement[]>([]);
+  const categoriesRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set(titleRef.current, { opacity: 0, y: 30 });
-      gsap.set(categoriesRef.current, { opacity: 0, y: 40, scale: 0.9 });
+      gsap.set(categoriesRef.current.filter(Boolean), { opacity: 0, y: 40, scale: 0.9 });
 
       gsap.to(titleRef.current, {
         opacity: 1,
@@ -38,7 +38,7 @@ export const CategoryGrid = () => {
         }
       });
 
-      gsap.to(categoriesRef.current, {
+      gsap.to(categoriesRef.current.filter(Boolean), {
         opacity: 1,
         y: 0,
         scale: 1,
@@ -57,8 +57,13 @@ export const CategoryGrid = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-12 bg-background">
-      <div className="container mx-auto px-4">
+    <section ref={sectionRef} className="py-12 bg-background relative overflow-hidden">
+      {/* Glowing background effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-white/10 to-white/5 blur-3xl opacity-30"></div>
+      <div className="absolute top-0 left-1/4 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-white/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div ref={titleRef} className="text-center mb-8">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
             Shop by Category
@@ -74,7 +79,9 @@ export const CategoryGrid = () => {
               <Link
                 key={category.name}
                 to={category.path}
-                ref={(el) => el && (categoriesRef.current[index] = el)}
+                ref={(el) => {
+                  categoriesRef.current[index] = el;
+                }}
                 className="flex-shrink-0"
               >
                 <Card className="w-40 h-48 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 hover:shadow-lg transition-all duration-300 hover:scale-105 border border-gray-200 dark:border-gray-700">

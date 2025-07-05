@@ -17,6 +17,7 @@ interface ProductCardProps {
   reviews: number;
   category: string;
   isNew?: boolean;
+  badge?: string;
 }
 
 export const ProductCard = ({ 
@@ -28,7 +29,8 @@ export const ProductCard = ({
   rating, 
   reviews, 
   category,
-  isNew 
+  isNew,
+  badge
 }: ProductCardProps) => {
   const addItem = useCartStore((state) => state.addItem);
   const { toast } = useToast();
@@ -65,6 +67,11 @@ export const ProductCard = ({
           {isNew && (
             <Badge className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1">
               New
+            </Badge>
+          )}
+          {badge && (
+            <Badge className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1">
+              {badge}
             </Badge>
           )}
           {discount > 0 && (
