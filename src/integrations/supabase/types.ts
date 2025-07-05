@@ -9,33 +9,80 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      order_items: {
+        Row: {
+          created_at: string | null
+          id: string
+          order_id: string | null
+          product_name: string
+          product_price: number
+          quantity: number
+          total_price: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          order_id?: string | null
+          product_name: string
+          product_price: number
+          quantity?: number
+          total_price: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          order_id?: string | null
+          product_name?: string
+          product_price?: number
+          quantity?: number
+          total_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
           customer_id: string
+          delivery_date: string | null
           id: string
           order_date: string | null
+          phone: string | null
           product_id: string
           quantity: number
+          shipping_address: string | null
           status: string
           total_amount: number
           updated_at: string | null
         }
         Insert: {
           customer_id: string
+          delivery_date?: string | null
           id?: string
           order_date?: string | null
+          phone?: string | null
           product_id: string
           quantity?: number
+          shipping_address?: string | null
           status?: string
           total_amount: number
           updated_at?: string | null
         }
         Update: {
           customer_id?: string
+          delivery_date?: string | null
           id?: string
           order_date?: string | null
+          phone?: string | null
           product_id?: string
           quantity?: number
+          shipping_address?: string | null
           status?: string
           total_amount?: number
           updated_at?: string | null
@@ -118,7 +165,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_daily_sales_summary: {
+        Args: { target_date?: string }
+        Returns: {
+          total_sales: number
+          total_orders: number
+          pending_orders: number
+          delivered_orders: number
+          in_transit_orders: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

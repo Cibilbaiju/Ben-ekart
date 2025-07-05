@@ -1,248 +1,103 @@
 
 import { useEffect, useRef } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Tv, 
-  Waves, 
-  Refrigerator, 
-  Microwave, 
-  Wind, 
-  Sofa, 
-  ChefHat,
-  Coffee,
-  UtensilsCrossed,
-  Wine,
-  Shirt,
-  Zap,
-  Home,
-  Lightbulb,
-  Watch,
-  Camera,
-  Fan,
-  Scissors,
-  Volume2,
-  Headphones
-} from "lucide-react";
+import { Link } from "react-router-dom";
+import { Card } from "@/components/ui/card";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const categories = [
-  {
-    name: "Washing Machines",
-    icon: Waves,
-    route: "/washing-machines"
-  },
-  {
-    name: "Tablets",
-    icon: Tv,
-    route: "/category/tablets"
-  },
-  {
-    name: "Wearables",
-    icon: Watch,
-    route: "/category/wearables"
-  },
-  {
-    name: "Kitchen Appliances",
-    icon: ChefHat,
-    route: "/category/kitchen-appliances"
-  },
-  {
-    name: "Home Theatre",
-    icon: Volume2,
-    route: "/category/home-theatre"
-  },
-  {
-    name: "Grooming",
-    icon: Scissors,
-    route: "/category/grooming"
-  },
-  {
-    name: "Microwaves",
-    icon: Microwave,
-    route: "/microwaves"
-  },
-  {
-    name: "Speakers",
-    icon: Headphones,
-    route: "/category/speakers"
-  },
-  {
-    name: "Cameras",
-    icon: Camera,
-    route: "/category/cameras"
-  },
-  {
-    name: "Fans",
-    icon: Fan,
-    route: "/category/fans"
-  },
-  {
-    name: "Televisions",
-    icon: Tv,
-    route: "/televisions"
-  },
-  {
-    name: "Refrigerators",
-    icon: Refrigerator,
-    route: "/refrigerators"
-  },
-  {
-    name: "Air Conditioners",
-    icon: Wind,
-    route: "/air-conditioners"
-  },
-  {
-    name: "Coffee Machines",
-    icon: Coffee,
-    route: "/category/coffee-machines"
-  },
-  {
-    name: "Furniture",
-    icon: Sofa,
-    route: "/furniture"
-  },
-  {
-    name: "Lighting",
-    icon: Lightbulb,
-    route: "/category/lighting"
-  }
+  { name: "Televisions", path: "/televisions", image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=200&h=150&fit=crop", items: "50+" },
+  { name: "Refrigerators", path: "/refrigerators", image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=200&h=150&fit=crop", items: "30+" },
+  { name: "Washing Machines", path: "/washing-machines", image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=200&h=150&fit=crop", items: "25+" },
+  { name: "Air Conditioners", path: "/air-conditioners", image: "https://images.unsplash.com/photo-1585338447937-7082f8fc763d?w=200&h=150&fit=crop", items: "40+" },
+  { name: "Microwaves", path: "/microwaves", image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=200&h=150&fit=crop", items: "20+" },
+  { name: "Furniture", path: "/furniture", image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=200&h=150&fit=crop", items: "60+" },
 ];
 
 export const CategoryGrid = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const categoriesRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set([titleRef.current], { opacity: 0, y: 30 });
+      gsap.set(titleRef.current, { opacity: 0, y: 30 });
+      gsap.set(categoriesRef.current, { opacity: 0, y: 40, scale: 0.9 });
 
-      const tl = gsap.timeline({
+      gsap.to(titleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
         scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
+          trigger: titleRef.current,
+          start: "top 85%",
           toggleActions: "play none none reverse"
         }
       });
 
-      tl.to(titleRef.current, {
+      gsap.to(categoriesRef.current, {
         opacity: 1,
         y: 0,
-        duration: 0.6,
-        ease: "power3.out"
+        scale: 1,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: categoriesRef.current[0],
+          start: "top 90%",
+          toggleActions: "play none none reverse"
+        }
       });
-
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    let isDown = false;
-    let startX: number;
-    let scrollLeft: number;
-
-    const handleMouseDown = (e: MouseEvent) => {
-      isDown = true;
-      container.style.cursor = 'grabbing';
-      startX = e.pageX - container.offsetLeft;
-      scrollLeft = container.scrollLeft;
-    };
-
-    const handleMouseLeave = () => {
-      isDown = false;
-      container.style.cursor = 'grab';
-    };
-
-    const handleMouseUp = () => {
-      isDown = false;
-      container.style.cursor = 'grab';
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - container.offsetLeft;
-      const walk = (x - startX) * 2;
-      container.scrollLeft = scrollLeft - walk;
-    };
-
-    container.addEventListener('mousedown', handleMouseDown);
-    container.addEventListener('mouseleave', handleMouseLeave);
-    container.addEventListener('mouseup', handleMouseUp);
-    container.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      container.removeEventListener('mousedown', handleMouseDown);
-      container.removeEventListener('mouseleave', handleMouseLeave);
-      container.removeEventListener('mouseup', handleMouseUp);
-      container.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
   return (
-    <section ref={sectionRef} className="py-8 bg-gradient-to-br from-background via-muted/10 to-background category-glow-section">
+    <section ref={sectionRef} className="py-12 bg-background">
       <div className="container mx-auto px-4">
-        <div ref={titleRef} className="text-center mb-6">
-          <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">
+        <div ref={titleRef} className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
             Shop by Category
           </h2>
-          <p className="text-sm text-muted-foreground">
-            Discover our premium products across all categories
+          <p className="text-muted-foreground">
+            Find the perfect appliances for your home
           </p>
         </div>
         
-        <div className="relative">
-          <div 
-            ref={scrollContainerRef}
-            className="flex gap-3 overflow-x-auto scrollbar-hide pb-4 cursor-grab select-none scroll-smooth"
-            style={{ 
-              scrollbarWidth: 'none', 
-              msOverflowStyle: 'none',
-              scrollBehavior: 'smooth'
-            }}
-          >
+        <div className="category-grid-container p-6">
+          <div className="category-scroll-container smooth-scroll">
             {categories.map((category, index) => (
               <Link
                 key={category.name}
-                to={category.route}
-                className="group block flex-shrink-0"
+                to={category.path}
+                ref={(el) => el && (categoriesRef.current[index] = el)}
+                className="flex-shrink-0"
               >
-                <Card className="hover-lift bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border border-blue-200/50 dark:border-blue-700/50 shadow-sm hover:shadow-md transition-all duration-300 group-hover:border-blue-300/70 dark:group-hover:border-blue-600/70 w-24 h-24 md:w-28 md:h-28 category-card-glow">
-                  <CardContent className="p-3 flex flex-col items-center justify-center space-y-2 h-full">
-                    <div className="relative w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:scale-110">
-                      <category.icon className="h-4 w-4 md:h-5 md:w-5 text-white" />
-                      
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-sm scale-125" />
+                <Card className="w-40 h-48 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 hover:shadow-lg transition-all duration-300 hover:scale-105 border border-gray-200 dark:border-gray-700">
+                  <div className="p-4 h-full flex flex-col">
+                    <div className="flex-1 flex items-center justify-center mb-3">
+                      <img
+                        src={category.image}
+                        alt={category.name}
+                        className="w-16 h-16 object-cover rounded-lg shadow-sm"
+                      />
                     </div>
-                    
                     <div className="text-center">
-                      <h3 className="font-medium text-foreground text-[10px] md:text-xs leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 text-center">
+                      <h3 className="font-semibold text-sm text-foreground mb-1 line-clamp-2">
                         {category.name}
                       </h3>
+                      <p className="text-xs text-muted-foreground">
+                        {category.items} items
+                      </p>
                     </div>
-                  </CardContent>
+                  </div>
                 </Card>
               </Link>
             ))}
-          </div>
-          
-          {/* Scroll indicators */}
-          <div className="absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-background to-transparent pointer-events-none opacity-60" />
-          <div className="absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-background to-transparent pointer-events-none opacity-60" />
-        </div>
-        
-        <div className="flex justify-center mt-4">
-          <div className="text-xs text-muted-foreground bg-muted/50 px-4 py-2 rounded-full">
-            Swipe or drag to explore more categories
           </div>
         </div>
       </div>

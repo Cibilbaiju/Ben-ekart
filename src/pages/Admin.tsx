@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "@/components/admin/AdminHeader";
 import OrdersTable from "@/components/admin/OrdersTable";
+import SalesReport from "@/components/admin/SalesReport";
 import { useAdminOrders } from "@/hooks/useAdminOrders";
 import { checkAdminStatus } from "@/utils/adminAuth";
 
@@ -50,14 +51,15 @@ const Admin = () => {
   }
 
   if (!isAdmin) {
-    return null; // This will be handled by the redirect in useEffect
+    return null;
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-800">
       <AdminHeader onSignOut={handleSignOut} />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 space-y-8">
+        <SalesReport />
         <OrdersTable orders={orders} onUpdateOrderStatus={updateOrderStatus} />
       </div>
     </div>
