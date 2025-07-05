@@ -57,13 +57,13 @@ export const CategoryGrid = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-12 bg-background">
+    <section ref={sectionRef} className="py-12 bg-gray-900">
       <div className="container mx-auto px-4">
         <div ref={titleRef} className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
             Shop by Category
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-gray-300">
             Find the perfect appliances for your home
           </p>
         </div>
@@ -77,7 +77,7 @@ export const CategoryGrid = () => {
                 categoriesRef.current[index] = el;
               }}
             >
-              <Card className="h-40 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 hover:shadow-lg transition-all duration-300 hover:scale-105 border border-gray-200 dark:border-gray-700">
+              <Card className="h-40 bg-gray-800 hover:bg-gray-700 hover:shadow-lg transition-all duration-300 hover:scale-105 border border-gray-700 hover:border-gray-600">
                 <div className="p-4 h-full flex flex-col">
                   <div className="flex-1 flex items-center justify-center mb-3">
                     <img
@@ -87,10 +87,10 @@ export const CategoryGrid = () => {
                     />
                   </div>
                   <div className="text-center">
-                    <h3 className="font-semibold text-sm text-foreground mb-1 line-clamp-2">
+                    <h3 className="font-semibold text-sm text-white mb-1 line-clamp-2">
                       {category.name}
                     </h3>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-gray-400">
                       {category.items} items
                     </p>
                   </div>

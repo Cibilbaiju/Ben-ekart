@@ -5,48 +5,41 @@ import { NewArrivals } from "@/components/home/NewArrivals";
 import { PayDayOffer } from "@/components/home/PayDayOffer";
 import { BestSellers } from "@/components/home/BestSellers";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
-      <Header />
-      
+    <div className="min-h-screen bg-gray-900">
       <main className="relative">
-        {/* Hero Section with enhanced visual appeal */}
+        {/* Hero Section */}
         <div className="relative">
           <HeroSection />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/20 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-900/20 pointer-events-none"></div>
         </div>
         
-        {/* Main content sections with improved spacing and backgrounds */}
-        <div className="relative z-10 space-y-0">
+        {/* Main content sections */}
+        <div className="relative z-10 space-y-0 bg-gray-900">
           <CategoryGrid />
           
           {/* Enhanced section separators */}
-          <div className="bg-gradient-to-r from-muted/20 via-muted/40 to-muted/20 py-12 md:py-16">
+          <div className="bg-gray-800 py-12 md:py-16">
             <NewArrivals />
           </div>
           
-          {/* Pay Day Special Offer - Replaces the previous OffersSection */}
           <PayDayOffer />
           
-          <div className="bg-gradient-to-r from-background via-muted/10 to-background py-12 md:py-16">
+          <div className="bg-gray-900 py-12 md:py-16">
             <BestSellers />
           </div>
           
-          <div className="bg-gradient-to-br from-muted/30 via-background to-muted/20 py-12 md:py-16">
+          <div className="bg-gray-800 py-12 md:py-16">
             <WhyChooseUs />
           </div>
         </div>
         
-        {/* Decorative elements */}
-        <div className="absolute top-1/4 left-0 w-64 h-64 bg-gradient-to-r from-primary/5 to-transparent rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-1/4 right-0 w-64 h-64 bg-gradient-to-l from-secondary/5 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+        {/* Decorative elements - dark theme */}
+        <div className="absolute top-1/4 left-0 w-64 h-64 bg-gradient-to-r from-blue-900/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-1/4 right-0 w-64 h-64 bg-gradient-to-l from-purple-900/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
       </main>
-      
-      <Footer />
     </div>
   );
 };
