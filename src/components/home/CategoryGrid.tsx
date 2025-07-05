@@ -57,13 +57,8 @@ export const CategoryGrid = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-12 bg-background relative overflow-hidden">
-      {/* Glowing background effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-white/10 to-white/5 blur-3xl opacity-30"></div>
-      <div className="absolute top-0 left-1/4 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-white/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      
-      <div className="container mx-auto px-4 relative z-10">
+    <section ref={sectionRef} className="py-12 bg-background">
+      <div className="container mx-auto px-4">
         <div ref={titleRef} className="text-center mb-8">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
             Shop by Category
@@ -73,39 +68,36 @@ export const CategoryGrid = () => {
           </p>
         </div>
         
-        <div className="category-grid-container p-6">
-          <div className="category-scroll-container smooth-scroll">
-            {categories.map((category, index) => (
-              <Link
-                key={category.name}
-                to={category.path}
-                ref={(el) => {
-                  categoriesRef.current[index] = el;
-                }}
-                className="flex-shrink-0"
-              >
-                <Card className="w-40 h-48 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 hover:shadow-lg transition-all duration-300 hover:scale-105 border border-gray-200 dark:border-gray-700">
-                  <div className="p-4 h-full flex flex-col">
-                    <div className="flex-1 flex items-center justify-center mb-3">
-                      <img
-                        src={category.image}
-                        alt={category.name}
-                        className="w-16 h-16 object-cover rounded-lg shadow-sm"
-                      />
-                    </div>
-                    <div className="text-center">
-                      <h3 className="font-semibold text-sm text-foreground mb-1 line-clamp-2">
-                        {category.name}
-                      </h3>
-                      <p className="text-xs text-muted-foreground">
-                        {category.items} items
-                      </p>
-                    </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {categories.map((category, index) => (
+            <Link
+              key={category.name}
+              to={category.path}
+              ref={(el) => {
+                categoriesRef.current[index] = el;
+              }}
+            >
+              <Card className="h-40 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 hover:shadow-lg transition-all duration-300 hover:scale-105 border border-gray-200 dark:border-gray-700">
+                <div className="p-4 h-full flex flex-col">
+                  <div className="flex-1 flex items-center justify-center mb-3">
+                    <img
+                      src={category.image}
+                      alt={category.name}
+                      className="w-16 h-16 object-cover rounded-lg shadow-sm"
+                    />
                   </div>
-                </Card>
-              </Link>
-            ))}
-          </div>
+                  <div className="text-center">
+                    <h3 className="font-semibold text-sm text-foreground mb-1 line-clamp-2">
+                      {category.name}
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      {category.items} items
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

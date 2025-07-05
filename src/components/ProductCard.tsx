@@ -57,7 +57,7 @@ export const ProductCard = ({
 
   return (
     <Link to={`/product/${id}`}>
-      <Card className="product-card-compact group cursor-pointer h-full">
+      <Card className="product-card-compact group cursor-pointer h-full bg-gray-900 border-gray-700 hover:border-gray-600">
         <div className="relative">
           <img
             src={image}
@@ -81,16 +81,16 @@ export const ProductCard = ({
           )}
         </div>
         
-        <CardContent className="product-content">
+        <CardContent className="product-content bg-gray-900">
           <div className="space-y-1">
-            <p className="product-title">{name}</p>
+            <p className="product-title text-white">{name}</p>
             
             <div className="flex items-center gap-2">
-              <span className="product-price">
+              <span className="product-price text-blue-400">
                 ₹{price.toLocaleString()}
               </span>
               {originalPrice && (
-                <span className="text-xs text-gray-500 line-through">
+                <span className="text-xs text-gray-400 line-through">
                   ₹{originalPrice.toLocaleString()}
                 </span>
               )}
@@ -99,7 +99,7 @@ export const ProductCard = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1">
                 <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                <span className="product-rating">
+                <span className="product-rating text-gray-300">
                   {rating} ({reviews})
                 </span>
               </div>
