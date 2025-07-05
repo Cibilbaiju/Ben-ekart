@@ -57,7 +57,7 @@ export const ProductCard = ({
 
   return (
     <Link to={`/product/${id}`}>
-      <Card className="product-card-compact group cursor-pointer h-full bg-gray-900 border-gray-700 hover:border-gray-600 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
+      <Card className="product-card-compact group cursor-pointer h-full bg-black border-gray-800 hover:border-gray-700 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
         <div className="relative">
           <img
             src={image}
@@ -81,7 +81,7 @@ export const ProductCard = ({
           )}
         </div>
         
-        <CardContent className="product-content bg-gray-900 border-t border-gray-800">
+        <CardContent className="product-content bg-black border-t border-gray-800">
           <div className="space-y-1">
             <p className="product-title text-white">{name}</p>
             
