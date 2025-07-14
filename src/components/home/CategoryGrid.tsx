@@ -2,7 +2,23 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
-import { Tv, Refrigerator, WashingMachine, Wind, Microwave, Sofa } from "lucide-react";
+import { 
+  Tv, 
+  Refrigerator, 
+  WashingMachine, 
+  Wind, 
+  Microwave, 
+  Sofa, 
+  Laptop, 
+  Smartphone, 
+  Headphones, 
+  Camera, 
+  Watch, 
+  Gamepad2,
+  Monitor,
+  Speaker,
+  Tablet
+} from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -15,6 +31,15 @@ const categories = [
   { name: "AC", path: "/air-conditioners", icon: Wind, items: "40+" },
   { name: "Microwave", path: "/microwaves", icon: Microwave, items: "20+" },
   { name: "Furniture", path: "/furniture", icon: Sofa, items: "60+" },
+  { name: "Laptops", path: "/laptops", icon: Laptop, items: "35+" },
+  { name: "Phones", path: "/smartphones", icon: Smartphone, items: "45+" },
+  { name: "Audio", path: "/headphones", icon: Headphones, items: "30+" },
+  { name: "Cameras", path: "/cameras", icon: Camera, items: "25+" },
+  { name: "Watches", path: "/watches", icon: Watch, items: "40+" },
+  { name: "Gaming", path: "/gaming", icon: Gamepad2, items: "35+" },
+  { name: "Monitors", path: "/monitors", icon: Monitor, items: "28+" },
+  { name: "Speakers", path: "/speakers", icon: Speaker, items: "32+" },
+  { name: "Tablets", path: "/tablets", icon: Tablet, items: "22+" },
 ];
 
 export const CategoryGrid = () => {
@@ -58,18 +83,18 @@ export const CategoryGrid = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 bg-black">
+    <section ref={sectionRef} className="py-6 bg-black">
       <div className="container mx-auto px-4">
-        <div ref={titleRef} className="text-center mb-6">
-          <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+        <div ref={titleRef} className="text-center mb-5">
+          <h2 className="text-lg md:text-xl font-bold text-white mb-1">
             Shop by Category
           </h2>
-          <p className="text-gray-400 text-sm">
-            Find the perfect appliances for your home
+          <p className="text-gray-400 text-xs">
+            Find the perfect products for your needs
           </p>
         </div>
         
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-3 max-w-4xl mx-auto">
+        <div className="grid grid-cols-5 md:grid-cols-15 gap-2 max-w-6xl mx-auto">
           {categories.map((category, index) => {
             const IconComponent = category.icon;
             return (
@@ -80,10 +105,10 @@ export const CategoryGrid = () => {
                   categoriesRef.current[index] = el;
                 }}
               >
-                <Card className="h-24 bg-gray-900 hover:bg-gray-800 hover:shadow-lg transition-all duration-300 hover:scale-105 border border-gray-800 hover:border-gray-700">
-                  <div className="p-3 h-full flex flex-col items-center justify-center">
+                <Card className="h-16 bg-gray-900 hover:bg-gray-800 hover:shadow-lg transition-all duration-300 hover:scale-105 border border-gray-800 hover:border-gray-700">
+                  <div className="p-2 h-full flex flex-col items-center justify-center">
                     <div className="flex-1 flex items-center justify-center mb-1">
-                      <IconComponent className="w-6 h-6 text-white" />
+                      <IconComponent className="w-4 h-4 text-white" />
                     </div>
                     <div className="text-center">
                       <h3 className="font-medium text-xs text-white mb-0.5 line-clamp-1">
