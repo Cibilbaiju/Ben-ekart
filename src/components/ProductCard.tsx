@@ -57,12 +57,12 @@ export const ProductCard = ({
 
   return (
     <Link to={`/product/${id}`}>
-      <Card className="product-card-compact group cursor-pointer h-full bg-black border-gray-800 hover:border-gray-700 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
-        <div className="relative">
+      <Card className="group cursor-pointer h-full bg-white border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/10">
+        <div className="relative overflow-hidden rounded-t-lg">
           <img
             src={image}
             alt={name}
-            className="product-image"
+            className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
           />
           {isNew && (
             <Badge className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1">
@@ -81,16 +81,18 @@ export const ProductCard = ({
           )}
         </div>
         
-        <CardContent className="product-content bg-black border-t border-gray-800">
-          <div className="space-y-1">
-            <p className="product-title text-white">{name}</p>
+        <CardContent className="p-4 bg-white">
+          <div className="space-y-2">
+            <h3 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors">
+              {name}
+            </h3>
             
             <div className="flex items-center gap-2">
-              <span className="product-price text-blue-400">
+              <span className="text-xl font-bold text-blue-600">
                 ₹{price.toLocaleString()}
               </span>
               {originalPrice && (
-                <span className="text-xs text-gray-400 line-through">
+                <span className="text-sm text-gray-500 line-through">
                   ₹{originalPrice.toLocaleString()}
                 </span>
               )}
@@ -98,8 +100,8 @@ export const ProductCard = ({
 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1">
-                <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                <span className="product-rating text-gray-300">
+                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                <span className="text-sm text-gray-600">
                   {rating} ({reviews})
                 </span>
               </div>
@@ -107,7 +109,7 @@ export const ProductCard = ({
               <Button
                 size="sm"
                 onClick={handleAddToCart}
-                className="h-7 px-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity bg-blue-600 hover:bg-blue-700"
+                className="h-8 px-3 text-xs opacity-0 group-hover:opacity-100 transition-opacity bg-blue-600 hover:bg-blue-700"
               >
                 <ShoppingCart className="h-3 w-3 mr-1" />
                 Add

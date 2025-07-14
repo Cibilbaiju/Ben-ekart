@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import { PaymentGateway } from "@/components/PaymentGateway";
 import { useCartStore } from "@/store/cartStore";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
@@ -190,7 +191,7 @@ const Cart = () => {
             </Card>
           </div>
 
-          {/* Order Summary */}
+          {/* Order Summary & Payment */}
           <div className="space-y-6">
             <Card className="shadow-xl border-0 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/95 backdrop-blur-md">
               <CardHeader className="bg-gradient-to-r from-gray-900 to-gray-800">
@@ -219,20 +220,19 @@ const Cart = () => {
                   <span>Total</span>
                   <span className="text-blue-400">₹{finalTotal.toLocaleString()}</span>
                 </div>
-                <Link to="/checkout">
-                  <Button className="w-full bg-gradient-to-r from-blue-800 to-purple-950 hover:from-blue-900 hover:to-purple-950 text-white py-3 text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
-                    <ShoppingCart className="h-5 w-5 mr-2" />
-                    Proceed to Checkout
-                  </Button>
-                </Link>
-                <Link to="/" className="block">
-                  <Button variant="outline" className="w-full py-3 hover:bg-gray-700 border-gray-700 text-gray-400">
-                    <ArrowLeft className="h-4 w-4 mr-2" />
-                    Continue Shopping
-                  </Button>
-                </Link>
               </CardContent>
             </Card>
+
+            {/* Payment Gateway */}
+            <PaymentGateway />
+
+            {/* Continue Shopping */}
+            <Link to="/" className="block">
+              <Button variant="outline" className="w-full py-3 hover:bg-gray-700 border-gray-700 text-gray-400">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Continue Shopping
+              </Button>
+            </Link>
 
             {/* Promo Code */}
             <Card className="shadow-xl border-0 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950/95 backdrop-blur-md">
@@ -252,4 +252,5 @@ const Cart = () => {
     </div>
   );
 };
+
 export default Cart;

@@ -1,158 +1,84 @@
 
-import { useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { ProductCard } from "@/components/ProductCard";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import AutoPhotoCarousel from "./AutoPhotoCarousel";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const bestSellers = [
-  {
-    id: "1",
-    name: "Samsung 65\" 4K Smart TV",
-    price: 74999,
-    originalPrice: 109999,
-    image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=400&h=300&fit=crop",
-    rating: 4.8,
-    reviews: 234,
-    category: "Television"
-  },
-  {
-    id: "2",
-    name: "LG Front Load Washing Machine",
-    price: 54999,
-    originalPrice: 67999,
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop",
-    rating: 4.6,
-    reviews: 189,
-    category: "Washing Machine"
-  },
-  {
-    id: "3",
-    name: "Whirlpool French Door Refrigerator",
-    price: 109999,
-    originalPrice: 135999,
-    image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop",
-    rating: 4.7,
-    reviews: 156,
-    category: "Refrigerator"
-  },
-  {
-    id: "4",
-    name: "Panasonic Inverter Microwave",
-    price: 25999,
-    originalPrice: 33999,
-    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=300&fit=crop",
-    rating: 4.5,
-    reviews: 298,
-    category: "Microwave"
-  },
-];
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image_url: string;
+  category: string;
+  description: string;
+}
 
 export const BestSellers = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const productsRef = useRef<HTMLDivElement[]>([]);
-  const carouselTitleRef = useRef<HTMLDivElement>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Set initial states
-      gsap.set([titleRef.current, carouselTitleRef.current], { opacity: 0, y: 50 });
-      gsap.set(productsRef.current, { opacity: 0, y: 80, rotationY: 15 });
-
-      // Carousel title animation
-      gsap.to(carouselTitleRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: carouselTitleRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleActions: "play none none reverse"
-        }
-      });
-
-      // Best Sellers title animation
-      gsap.to(titleRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleActions: "play none none reverse"
-        }
-      });
-
-      // Products animation with 3D effect
-      gsap.to(productsRef.current, {
-        opacity: 1,
-        y: 0,
-        rotationY: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: productsRef.current[0],
-          start: "top 85%",
-          end: "bottom 15%",
-          toggleActions: "play none none reverse"
-        }
-      });
-
-    }, sectionRef);
-
-    return () => ctx.revert();
+    fetchBestSellers();
   }, []);
 
+  const fetchBestSellers = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('is_active', true)
+        .limit(8);
+
+      if (error) throw error;
+      setProducts(data || []);
+    } catch (error) {
+      console.error('Error fetching best sellers:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Best Sellers</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="bg-white rounded-lg p-4 animate-pulse">
+                <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>
+                <div className="bg-gray-200 h-4 rounded mb-2"></div>
+                <div className="bg-gray-200 h-4 rounded w-2/3"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section ref={sectionRef} className="py-16 bg-background">
+    <section className="py-16 bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="container mx-auto px-4">
-        {/* All Bank Offers Carousel with heading */}
-        <div ref={carouselTitleRef} className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            All Bank Offers
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Exclusive deals and discounts available with all major banks
-          </p>
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">Best Sellers</h2>
+          <p className="text-gray-600 text-lg">Our most popular products loved by customers</p>
         </div>
         
-        <AutoPhotoCarousel />
-        
-        {/* Best Sellers Section */}
-        <div ref={titleRef} className="text-center mb-12 mt-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Best Sellers
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover our most popular appliances trusted by thousands of satisfied customers
-          </p>
-        </div>
-        
-        <div className="responsive-product-grid gap-6">
-          {bestSellers.map((product, index) => (
-            <div 
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <ProductCard
               key={product.id}
-              ref={(el) => el && (productsRef.current[index] = el)}
-            >
-              <ProductCard 
-                id={product.id}
-                name={product.name}
-                price={product.price}
-                originalPrice={product.originalPrice}
-                image={product.image}
-                rating={product.rating}
-                reviews={product.reviews}
-                category={product.category}
-              />
-            </div>
+              id={product.id}
+              name={product.name}
+              price={product.price}
+              image={product.image_url || "/placeholder.svg"}
+              rating={4.5}
+              reviews={Math.floor(Math.random() * 200) + 50}
+              category={product.category}
+              badge="Bestseller"
+            />
           ))}
         </div>
       </div>

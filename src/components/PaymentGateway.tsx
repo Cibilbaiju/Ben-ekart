@@ -2,15 +2,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useCartStore } from "@/store/cartStore";
 import { CreditCard, Lock, Shield } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface PaymentGatewayProps {
-  amount: number;
-  productName: string;
+  amount?: number;
+  productName?: string;
   onSuccess?: () => void;
   onCancel?: () => void;
 }
@@ -24,29 +23,64 @@ export const PaymentGateway = ({
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'upi' | 'wallet'>('card');
   const { toast } = useToast();
+  const { items, totalPrice, clearCart } = useCartStore();
+
+  // Use cart data if no specific amount/product provided
+  const finalAmount = amount || totalPrice;
+  const finalProductName = productName || `Cart Items (${items.length} items)`;
 
   const handlePayment = async () => {
+    if (finalAmount <= 0) {
+      toast({
+        title: "Error",
+        description: "No items in cart or invalid amount",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsProcessing(true);
     
     try {
+      // Prepare payment data
+      const paymentData = amount ? {
+        amount: finalAmount,
+        productName: finalProductName,
+        currency: 'inr'
+      } : {
+        amount: finalAmount,
+        productName: finalProductName,
+        currency: 'inr',
+        items: items.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image
+        }))
+      };
+
       // Call Supabase edge function for payment processing
       const { data, error } = await supabase.functions.invoke('create-payment', {
-        body: {
-          amount: amount * 100, // Convert to cents
-          productName,
-          paymentMethod,
-          currency: 'usd'
-        }
+        body: paymentData
       });
 
       if (error) throw error;
 
       if (data?.url) {
+        // Clear cart if processing cart items
+        if (!amount) {
+          clearCart();
+        }
+        
         // Redirect to Stripe checkout
-        window.open(data.url, '_blank');
+        window.location.href = data.url;
         onSuccess?.();
+      } else {
+        throw new Error('No payment URL received');
       }
     } catch (error: any) {
+      console.error('Payment error:', error);
       toast({
         title: "Payment Error",
         description: error.message || "Failed to process payment",
@@ -72,12 +106,12 @@ export const PaymentGateway = ({
       
       <CardContent className="space-y-6">
         <div className="text-center p-4 bg-gray-800/50 rounded-lg">
-          <h3 className="text-lg font-semibold text-white">{productName}</h3>
-          <p className="text-2xl font-bold text-green-400">${amount.toFixed(2)}</p>
+          <h3 className="text-lg font-semibold text-white line-clamp-2">{finalProductName}</h3>
+          <p className="text-2xl font-bold text-green-400">₹{finalAmount.toLocaleString()}</p>
         </div>
 
         <div className="space-y-4">
-          <Label className="text-white">Payment Method</Label>
+          <label className="text-white text-sm font-medium">Payment Method</label>
           <div className="grid grid-cols-3 gap-2">
             <button
               onClick={() => setPaymentMethod('card')}
@@ -115,8 +149,8 @@ export const PaymentGateway = ({
         <div className="space-y-4">
           <Button
             onClick={handlePayment}
-            disabled={isProcessing}
-            className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-300 hover:scale-105"
+            disabled={isProcessing || finalAmount <= 0}
+            className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             {isProcessing ? (
               <div className="flex items-center gap-2">
@@ -126,7 +160,7 @@ export const PaymentGateway = ({
             ) : (
               <div className="flex items-center gap-2">
                 <Lock className="h-4 w-4" />
-                Pay ${amount.toFixed(2)}
+                Pay ₹{finalAmount.toLocaleString()}
               </div>
             )}
           </Button>

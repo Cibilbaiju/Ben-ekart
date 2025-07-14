@@ -15,80 +15,104 @@ serve(async (req) => {
   }
 
   try {
-    const { amount, productName, paymentMethod, currency = "usd" } = await req.json();
+    // Parse request body
+    const { amount, currency = 'inr', productName, items } = await req.json();
 
-    // Initialize Stripe
+    // Validate required fields
+    if (!amount || !productName) {
+      throw new Error("Missing required fields: amount and productName");
+    }
+
+    // Initialize Stripe with secret key
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2023-10-16",
     });
 
-    // Get user from request (optional for guest checkout)
-    const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? ""
-    );
+    // Create Supabase client
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    let customerEmail = "guest@example.com";
-    let customerId;
-
-    // Try to get authenticated user
-    try {
-      const authHeader = req.headers.get("Authorization");
-      if (authHeader) {
-        const token = authHeader.replace("Bearer ", "");
-        const { data } = await supabaseClient.auth.getUser(token);
-        if (data.user?.email) {
-          customerEmail = data.user.email;
-          
-          // Check if customer exists in Stripe
-          const customers = await stripe.customers.list({ 
-            email: customerEmail, 
-            limit: 1 
-          });
-          
-          if (customers.data.length > 0) {
-            customerId = customers.data[0].id;
-          }
-        }
-      }
-    } catch (error) {
-      console.log("No authenticated user, proceeding with guest checkout");
+    // Get user from auth header (optional for guest checkout)
+    let user = null;
+    const authHeader = req.headers.get("Authorization");
+    if (authHeader) {
+      const token = authHeader.replace("Bearer ", "");
+      const { data } = await supabase.auth.getUser(token);
+      user = data.user;
     }
 
-    // Create checkout session
-    const session = await stripe.checkout.sessions.create({
-      customer: customerId,
-      customer_email: customerId ? undefined : customerEmail,
-      line_items: [
-        {
-          price_data: {
-            currency: currency,
-            product_data: {
-              name: productName,
-            },
-            unit_amount: amount,
-          },
-          quantity: 1,
+    // Create line items for Stripe
+    const lineItems = items ? items.map((item: any) => ({
+      price_data: {
+        currency: currency,
+        product_data: {
+          name: item.name,
+          images: item.image ? [item.image] : undefined,
         },
-      ],
-      mode: "payment",
-      success_url: `${req.headers.get("origin")}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.get("origin")}/payment-cancelled`,
-      payment_method_types: paymentMethod === 'card' ? ['card'] : 
-                           paymentMethod === 'upi' ? ['card'] : ['card'],
+        unit_amount: Math.round(item.price * 100), // Convert to cents
+      },
+      quantity: item.quantity || 1,
+    })) : [{
+      price_data: {
+        currency: currency,
+        product_data: {
+          name: productName,
+        },
+        unit_amount: Math.round(amount * 100), // Convert to cents
+      },
+      quantity: 1,
+    }];
+
+    // Get origin for redirect URLs
+    const origin = req.headers.get("origin") || "https://localhost:3000";
+
+    // Create Stripe checkout session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: lineItems,
+      mode: 'payment',
+      success_url: `${origin}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/payment-cancelled`,
+      customer_email: user?.email || undefined,
+      metadata: {
+        user_id: user?.id || 'guest',
+        order_type: 'ecommerce'
+      }
     });
 
+    // Optionally create order record in database
+    if (user && items) {
+      for (const item of items) {
+        await supabase.from('orders').insert({
+          customer_id: user.id,
+          product_id: item.id,
+          quantity: item.quantity || 1,
+          total_amount: item.price * (item.quantity || 1),
+          status: 'pending',
+          payment_method: 'stripe',
+          stripe_session_id: session.id
+        });
+      }
+    }
+
     return new Response(
-      JSON.stringify({ url: session.url, sessionId: session.id }),
+      JSON.stringify({ 
+        url: session.url,
+        session_id: session.id 
+      }),
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
       }
     );
+
   } catch (error) {
-    console.error("Payment error:", error);
+    console.error('Payment creation error:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message || "Failed to create payment session" 
+      }),
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 500,
