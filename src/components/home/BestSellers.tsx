@@ -10,6 +10,8 @@ interface Product {
   image_url: string;
   category: string;
   description: string;
+  stock_quantity: number;
+  is_active: boolean;
 }
 
 export const BestSellers = () => {
@@ -24,7 +26,7 @@ export const BestSellers = () => {
     try {
       const { data, error } = await supabase
         .from('products')
-        .select('*')
+        .select('id, name, price, image_url, category, description, stock_quantity, is_active')
         .eq('is_active', true)
         .limit(8);
 

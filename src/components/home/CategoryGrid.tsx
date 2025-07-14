@@ -71,7 +71,6 @@ export const CategoryGrid = () => {
     
     if (!container || !scrollContainer) return;
 
-    // Simple fade-in animation without floating
     gsap.fromTo(
       container.children,
       { 
@@ -93,7 +92,6 @@ export const CategoryGrid = () => {
       }
     );
 
-    // Smooth scroll behavior for the horizontal container
     const handleWheel = (e: WheelEvent) => {
       if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         e.preventDefault();
@@ -111,7 +109,6 @@ export const CategoryGrid = () => {
 
   return (
     <section className="py-16 bg-gradient-to-br from-gray-900 via-gray-950 to-black relative overflow-hidden">
-      {/* Background decorative elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]" />
       
       <div className="container mx-auto px-4">
@@ -128,13 +125,17 @@ export const CategoryGrid = () => {
         <div className="hidden lg:block">
           <div 
             ref={scrollContainerRef}
-            className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
+            className="flex gap-6 overflow-x-auto pb-4"
             style={{
               scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-              WebkitScrollbar: { display: 'none' }
+              msOverflowStyle: 'none'
             }}
           >
+            <style jsx>{`
+              div::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
             <div ref={containerRef} className="flex gap-6 min-w-max">
               {categories.map((category, index) => {
                 const IconComponent = category.icon;
@@ -145,10 +146,8 @@ export const CategoryGrid = () => {
                     className="group flex-shrink-0"
                   >
                     <div className="relative w-32 h-32 rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 hover:scale-105 group-hover:shadow-2xl group-hover:shadow-blue-500/20">
-                      {/* Gradient overlay */}
                       <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-2xl`} />
                       
-                      {/* Content */}
                       <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
                         <IconComponent className="h-8 w-8 text-gray-300 group-hover:text-white transition-colors duration-300 mb-2" />
                         <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors duration-300 text-center leading-tight">
@@ -156,7 +155,6 @@ export const CategoryGrid = () => {
                         </span>
                       </div>
                       
-                      {/* Shine effect */}
                       <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
                     </div>
                   </Link>
@@ -165,7 +163,6 @@ export const CategoryGrid = () => {
             </div>
           </div>
           
-          {/* Scroll indicator */}
           <div className="flex justify-center mt-6">
             <div className="flex items-center gap-2 text-gray-500 text-sm">
               <div className="w-1 h-1 bg-gray-500 rounded-full animate-pulse" />
@@ -180,13 +177,17 @@ export const CategoryGrid = () => {
           <div className="space-y-6">
             {/* First row */}
             <div 
-              className="flex gap-4 overflow-x-auto scrollbar-hide pb-2"
+              className="flex gap-4 overflow-x-auto pb-2"
               style={{
                 scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                WebkitScrollbar: { display: 'none' }
+                msOverflowStyle: 'none'
               }}
             >
+              <style jsx>{`
+                div::-webkit-scrollbar {
+                  display: none;
+                }
+              `}</style>
               <div className="flex gap-4 min-w-max">
                 {categories.slice(0, Math.ceil(categories.length / 2)).map((category, index) => {
                   const IconComponent = category.icon;
@@ -214,13 +215,17 @@ export const CategoryGrid = () => {
 
             {/* Second row */}
             <div 
-              className="flex gap-4 overflow-x-auto scrollbar-hide pb-2"
+              className="flex gap-4 overflow-x-auto pb-2"
               style={{
                 scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                WebkitScrollbar: { display: 'none' }
+                msOverflowStyle: 'none'
               }}
             >
+              <style jsx>{`
+                div::-webkit-scrollbar {
+                  display: none;
+                }
+              `}</style>
               <div className="flex gap-4 min-w-max">
                 {categories.slice(Math.ceil(categories.length / 2)).map((category, index) => {
                   const IconComponent = category.icon;

@@ -11,6 +11,8 @@ interface Product {
   image_url: string;
   category: string;
   description: string;
+  stock_quantity: number;
+  is_active: boolean;
 }
 
 const Televisions = () => {
@@ -25,7 +27,7 @@ const Televisions = () => {
     try {
       const { data, error } = await supabase
         .from('products')
-        .select('*')
+        .select('id, name, price, image_url, category, description, stock_quantity, is_active')
         .eq('category', 'televisions')
         .eq('is_active', true);
 
