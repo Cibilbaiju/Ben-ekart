@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -25,6 +24,9 @@ import WashingMachines from "./pages/WashingMachines";
 import AirConditioners from "./pages/AirConditioners";
 import Microwaves from "./pages/Microwaves";
 import FurnitureCategory from "./pages/FurnitureCategory";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancelled from "./pages/PaymentCancelled";
+import Search from "./pages/Search";
 
 const queryClient = new QueryClient();
 
@@ -50,12 +52,15 @@ const App = () => (
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/find-store" element={<FindStore />} />
                 <Route path="/offers" element={<Offers />} />
+                <Route path="/search" element={<Search />} />
                 <Route path="/televisions" element={<Televisions />} />
                 <Route path="/refrigerators" element={<Refrigerators />} />
                 <Route path="/washing-machines" element={<WashingMachines />} />
                 <Route path="/air-conditioners" element={<AirConditioners />} />
                 <Route path="/microwaves" element={<Microwaves />} />
                 <Route path="/furniture" element={<FurnitureCategory />} />
+                <Route path="/payment-success" element={<PaymentSuccess />} />
+                <Route path="/payment-cancelled" element={<PaymentCancelled />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
