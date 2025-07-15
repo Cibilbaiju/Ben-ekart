@@ -29,7 +29,11 @@ export const BestSellers = () => {
         .eq('is_active', true)
         .limit(8);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching best sellers:', error);
+        return;
+      }
+      
       setProducts(data || []);
     } catch (error) {
       console.error('Error fetching best sellers:', error);
@@ -63,25 +67,34 @@ export const BestSellers = () => {
     <section className="py-16 bg-black">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-blue-500/20 text-blue-400 px-4 py-2 rounded-full text-sm font-medium mb-4">
+            ⭐ Best Sellers
+          </div>
           <h2 className="text-4xl font-bold text-white mb-4">Best Sellers</h2>
           <p className="text-gray-400 text-lg">Our most popular products loved by customers</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              image={product.image_url || "/placeholder.svg"}
-              rating={4.5}
-              reviews={Math.floor(Math.random() * 200) + 50}
-              badge="Bestseller"
-              category="Electronics"
-            />
-          ))}
-        </div>
+        {products.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                image={product.image_url || "/placeholder.svg"}
+                rating={4.5}
+                reviews={Math.floor(Math.random() * 200) + 50}
+                badge="Bestseller"
+                category="Electronics"
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-gray-400 text-lg">No products available at the moment.</p>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,6 +1,13 @@
 
 import { CreditCard, Percent, Gift, Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const bankOffers = [
   {
@@ -38,6 +45,24 @@ const bankOffers = [
     minAmount: "₹8,000",
     code: "AXIS8",
     color: "from-purple-600 to-purple-800"
+  },
+  {
+    id: 5,
+    bank: "Kotak Bank",
+    offer: "20% Cashback",
+    description: "Special offer on Kotak Credit Cards",
+    minAmount: "₹20,000",
+    code: "KOTAK20",
+    color: "from-red-600 to-red-800"
+  },
+  {
+    id: 6,
+    bank: "IDFC Bank",
+    offer: "5% Off",
+    description: "Instant discount on IDFC Cards",
+    minAmount: "₹5,000",
+    code: "IDFC5",
+    color: "from-indigo-600 to-indigo-800"
   }
 ];
 
@@ -54,51 +79,63 @@ export const BankOffers = () => {
           <p className="text-gray-400 text-lg">Save more with our special bank partnerships</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {bankOffers.map((offer) => (
-            <Card key={offer.id} className="bg-gradient-to-br from-gray-900 to-gray-800 border-gray-700 hover:border-gray-600 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 group">
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className={`p-2 rounded-lg bg-gradient-to-r ${offer.color}`}>
-                      <CreditCard className="h-6 w-6 text-white" />
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-2 md:-ml-4">
+            {bankOffers.map((offer) => (
+              <CarouselItem key={offer.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                <Card className="bg-gradient-to-br from-gray-900 to-gray-800 border-gray-700 hover:border-gray-600 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 group h-full">
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className={`p-2 rounded-lg bg-gradient-to-r ${offer.color}`}>
+                          <CreditCard className="h-6 w-6 text-white" />
+                        </div>
+                        <div className="flex items-center gap-1 text-yellow-400">
+                          <Star className="h-4 w-4 fill-current" />
+                          <span className="text-xs font-medium">Exclusive</span>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-bold text-white mb-1">{offer.bank}</h3>
+                        <p className={`text-xl font-bold bg-gradient-to-r ${offer.color} bg-clip-text text-transparent`}>
+                          {offer.offer}
+                        </p>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <p className="text-gray-400 text-sm">{offer.description}</p>
+                        <div className="flex items-center gap-2 text-xs">
+                          <span className="bg-gray-800 text-gray-300 px-2 py-1 rounded">
+                            Min: {offer.minAmount}
+                          </span>
+                          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
+                            Code: {offer.code}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="pt-2">
+                        <button className={`w-full bg-gradient-to-r ${offer.color} text-white py-2 px-4 rounded-lg font-medium text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2 group-hover:scale-105 transform duration-200`}>
+                          <Gift className="h-4 w-4" />
+                          Apply Offer
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1 text-yellow-400">
-                      <Star className="h-4 w-4 fill-current" />
-                      <span className="text-xs font-medium">Exclusive</span>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-lg font-bold text-white mb-1">{offer.bank}</h3>
-                    <p className={`text-xl font-bold bg-gradient-to-r ${offer.color} bg-clip-text text-transparent`}>
-                      {offer.offer}
-                    </p>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <p className="text-gray-400 text-sm">{offer.description}</p>
-                    <div className="flex items-center gap-2 text-xs">
-                      <span className="bg-gray-800 text-gray-300 px-2 py-1 rounded">
-                        Min: {offer.minAmount}
-                      </span>
-                      <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
-                        Code: {offer.code}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div className="pt-2">
-                    <button className={`w-full bg-gradient-to-r ${offer.color} text-white py-2 px-4 rounded-lg font-medium text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2 group-hover:scale-105 transform duration-200`}>
-                      <Gift className="h-4 w-4" />
-                      Apply Offer
-                    </button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden md:flex -left-12 bg-gray-800 border-gray-700 text-white hover:bg-gray-700" />
+          <CarouselNext className="hidden md:flex -right-12 bg-gray-800 border-gray-700 text-white hover:bg-gray-700" />
+        </Carousel>
       </div>
     </section>
   );
