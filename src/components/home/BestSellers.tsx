@@ -8,10 +8,9 @@ interface Product {
   name: string;
   price: number;
   image_url: string;
-  category: string;
   description: string;
-  stock_quantity: number;
   is_active: boolean;
+  created_at: string;
 }
 
 export const BestSellers = () => {
@@ -26,7 +25,7 @@ export const BestSellers = () => {
     try {
       const { data, error } = await supabase
         .from('products')
-        .select('id, name, price, image_url, category, description, stock_quantity, is_active')
+        .select('id, name, price, image_url, description, is_active, created_at')
         .eq('is_active', true)
         .limit(8);
 
@@ -78,7 +77,7 @@ export const BestSellers = () => {
               image={product.image_url || "/placeholder.svg"}
               rating={4.5}
               reviews={Math.floor(Math.random() * 200) + 50}
-              category={product.category}
+              category="electronics"
               badge="Bestseller"
             />
           ))}

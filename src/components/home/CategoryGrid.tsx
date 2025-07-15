@@ -125,17 +125,8 @@ export const CategoryGrid = () => {
         <div className="hidden lg:block">
           <div 
             ref={scrollContainerRef}
-            className="flex gap-6 overflow-x-auto pb-4"
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none'
-            }}
+            className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide"
           >
-            <style jsx>{`
-              div::-webkit-scrollbar {
-                display: none;
-              }
-            `}</style>
             <div ref={containerRef} className="flex gap-6 min-w-max">
               {categories.map((category, index) => {
                 const IconComponent = category.icon;
@@ -176,18 +167,7 @@ export const CategoryGrid = () => {
         <div className="lg:hidden">
           <div className="space-y-6">
             {/* First row */}
-            <div 
-              className="flex gap-4 overflow-x-auto pb-2"
-              style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none'
-              }}
-            >
-              <style jsx>{`
-                div::-webkit-scrollbar {
-                  display: none;
-                }
-              `}</style>
+            <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
               <div className="flex gap-4 min-w-max">
                 {categories.slice(0, Math.ceil(categories.length / 2)).map((category, index) => {
                   const IconComponent = category.icon;
@@ -214,18 +194,7 @@ export const CategoryGrid = () => {
             </div>
 
             {/* Second row */}
-            <div 
-              className="flex gap-4 overflow-x-auto pb-2"
-              style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none'
-              }}
-            >
-              <style jsx>{`
-                div::-webkit-scrollbar {
-                  display: none;
-                }
-              `}</style>
+            <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
               <div className="flex gap-4 min-w-max">
                 {categories.slice(Math.ceil(categories.length / 2)).map((category, index) => {
                   const IconComponent = category.icon;
