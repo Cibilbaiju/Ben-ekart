@@ -78,6 +78,7 @@ export const BestSellers = () => {
               rating={4.5}
               reviews={Math.floor(Math.random() * 200) + 50}
               badge="Bestseller"
+              category="Electronics"
             />
           ))}
         </div>
