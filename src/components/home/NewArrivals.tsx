@@ -57,15 +57,15 @@ const newArrivals = [
 export const NewArrivals = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
   const productsRef = useRef<HTMLDivElement[]>([]);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Set initial states
       gsap.set(titleRef.current, { opacity: 0, y: 50 });
-      gsap.set(carouselRef.current, { opacity: 0, y: 30 });
       gsap.set(productsRef.current, { opacity: 0, y: 80, rotationY: 15 });
+      gsap.set(carouselRef.current, { opacity: 0, y: 30 });
 
       // Title animation
       gsap.to(titleRef.current, {
@@ -81,21 +81,6 @@ export const NewArrivals = () => {
         }
       });
 
-      // Carousel animation
-      gsap.to(carouselRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        delay: 0.3,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: carouselRef.current,
-          start: "top 85%",
-          end: "bottom 15%",
-          toggleActions: "play none none reverse"
-        }
-      });
-
       // Products animation with 3D effect
       gsap.to(productsRef.current, {
         opacity: 1,
@@ -103,10 +88,25 @@ export const NewArrivals = () => {
         rotationY: 0,
         duration: 0.8,
         stagger: 0.15,
-        delay: 0.6,
+        delay: 0.3,
         ease: "power3.out",
         scrollTrigger: {
           trigger: productsRef.current[0],
+          start: "top 85%",
+          end: "bottom 15%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      // Carousel animation
+      gsap.to(carouselRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 0.6,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: carouselRef.current,
           start: "top 85%",
           end: "bottom 15%",
           toggleActions: "play none none reverse"
@@ -130,12 +130,7 @@ export const NewArrivals = () => {
           </p>
         </div>
         
-        {/* Auto-scrolling carousel */}
-        <div ref={carouselRef} className="mb-16">
-          <AutoScrollCarousel />
-        </div>
-        
-        <div className="responsive-product-grid gap-6">
+        <div className="responsive-product-grid gap-6 mb-12">
           {newArrivals.map((product, index) => (
             <div 
               key={product.id}
@@ -154,6 +149,11 @@ export const NewArrivals = () => {
               />
             </div>
           ))}
+        </div>
+        
+        {/* Auto-scrolling carousel positioned after products */}
+        <div ref={carouselRef}>
+          <AutoScrollCarousel />
         </div>
       </div>
     </section>
