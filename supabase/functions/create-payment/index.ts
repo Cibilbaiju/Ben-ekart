@@ -15,6 +15,21 @@ serve(async (req) => {
   }
 
   try {
+    // Check if Stripe secret key is available
+    const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY");
+    if (!stripeSecretKey) {
+      console.error("STRIPE_SECRET_KEY is not configured");
+      return new Response(
+        JSON.stringify({ 
+          error: "Payment service not configured. Please contact support." 
+        }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 500,
+        }
+      );
+    }
+
     // Parse request body
     const { amount, currency = 'inr', productName, items } = await req.json();
 
@@ -24,7 +39,7 @@ serve(async (req) => {
     }
 
     // Initialize Stripe with secret key
-    const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
+    const stripe = new Stripe(stripeSecretKey, {
       apiVersion: "2023-10-16",
     });
 
@@ -65,7 +80,7 @@ serve(async (req) => {
     }];
 
     // Get origin for redirect URLs
-    const origin = req.headers.get("origin") || "https://localhost:3000";
+    const origin = req.headers.get("origin") || "http://localhost:3000";
 
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({

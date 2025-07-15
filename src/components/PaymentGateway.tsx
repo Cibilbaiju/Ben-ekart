@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useCartStore } from "@/store/cartStore";
-import { CreditCard, Lock, Shield } from "lucide-react";
+import { CreditCard, Lock, Shield, Store, Truck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface PaymentGatewayProps {
@@ -22,12 +22,21 @@ export const PaymentGateway = ({
 }: PaymentGatewayProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'upi' | 'wallet'>('card');
+  const [deliveryOption, setDeliveryOption] = useState<'delivery' | 'pickup'>('delivery');
   const { toast } = useToast();
   const { items, totalPrice, clearCart } = useCartStore();
 
   // Use cart data if no specific amount/product provided
   const finalAmount = amount || totalPrice;
   const finalProductName = productName || `Cart Items (${items.length} items)`;
+
+  const stores = [
+    { id: "pallikkara", name: "BEN Home Ambitions - Pallikkara", address: "Main Road, Pallikkara, Ernakulam" },
+    { id: "mannoor", name: "BEN Home Ambitions - Mannoor", address: "NH Road, Mannoor, Ernakulam" },
+    { id: "karimugal", name: "BEN Home Ambitions - Karimugal", address: "MC Road, Karimugal, Ernakulam" }
+  ];
+
+  const deliveryCharge = deliveryOption === "pickup" ? 0 : (finalAmount > 50000 ? 0 : 999);
 
   const handlePayment = async () => {
     if (finalAmount <= 0) {
@@ -60,12 +69,17 @@ export const PaymentGateway = ({
         }))
       };
 
+      console.log('Initiating payment with data:', paymentData);
+
       // Call Supabase edge function for payment processing
       const { data, error } = await supabase.functions.invoke('create-payment', {
         body: paymentData
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Payment function error:', error);
+        throw error;
+      }
 
       if (data?.url) {
         // Clear cart if processing cart items
@@ -83,7 +97,7 @@ export const PaymentGateway = ({
       console.error('Payment error:', error);
       toast({
         title: "Payment Error",
-        description: error.message || "Failed to process payment",
+        description: error.message || "Failed to process payment. Please check if payment service is configured.",
         variant: "destructive"
       });
     } finally {
@@ -110,6 +124,48 @@ export const PaymentGateway = ({
           <p className="text-2xl font-bold text-green-400">₹{finalAmount.toLocaleString()}</p>
         </div>
 
+        {/* Delivery Option */}
+        <div className="space-y-4">
+          <label className="text-white text-sm font-medium">Delivery Option</label>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              onClick={() => setDeliveryOption('delivery')}
+              className={`p-3 rounded-lg border text-sm font-medium transition-all flex items-center gap-2 ${
+                deliveryOption === 'delivery'
+                  ? 'border-blue-500 bg-blue-500/20 text-blue-400'
+                  : 'border-gray-600 bg-gray-800 text-gray-300 hover:border-gray-500'
+              }`}
+            >
+              <Truck className="h-4 w-4" />
+              Delivery
+            </button>
+            <button
+              onClick={() => setDeliveryOption('pickup')}
+              className={`p-3 rounded-lg border text-sm font-medium transition-all flex items-center gap-2 ${
+                deliveryOption === 'pickup'
+                  ? 'border-green-500 bg-green-500/20 text-green-400'
+                  : 'border-gray-600 bg-gray-800 text-gray-300 hover:border-gray-500'
+              }`}
+            >
+              <Store className="h-4 w-4" />
+              Pickup
+            </button>
+          </div>
+          
+          {deliveryOption === 'pickup' && (
+            <div className="text-center p-3 bg-green-900/20 rounded-lg">
+              <p className="text-green-400 text-sm">🎉 No delivery charges! Pick up from any of our stores.</p>
+            </div>
+          )}
+          
+          {deliveryOption === 'delivery' && deliveryCharge === 0 && (
+            <div className="text-center p-3 bg-green-900/20 rounded-lg">
+              <p className="text-green-400 text-sm">🎉 Free delivery on orders above ₹50,000!</p>
+            </div>
+          )}
+        </div>
+
+        {/* Payment Method */}
         <div className="space-y-4">
           <label className="text-white text-sm font-medium">Payment Method</label>
           <div className="grid grid-cols-3 gap-2">
@@ -160,7 +216,7 @@ export const PaymentGateway = ({
             ) : (
               <div className="flex items-center gap-2">
                 <Lock className="h-4 w-4" />
-                Pay ₹{finalAmount.toLocaleString()}
+                Pay ₹{(finalAmount + deliveryCharge).toLocaleString()}
               </div>
             )}
           </Button>
