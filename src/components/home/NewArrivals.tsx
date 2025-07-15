@@ -1,6 +1,7 @@
 
 import { useEffect, useRef } from "react";
 import { ProductCard } from "@/components/ProductCard";
+import { AutoScrollCarousel } from "./AutoScrollCarousel";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -56,12 +57,14 @@ const newArrivals = [
 export const NewArrivals = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const productsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Set initial states
       gsap.set(titleRef.current, { opacity: 0, y: 50 });
+      gsap.set(carouselRef.current, { opacity: 0, y: 30 });
       gsap.set(productsRef.current, { opacity: 0, y: 80, rotationY: 15 });
 
       // Title animation
@@ -78,6 +81,21 @@ export const NewArrivals = () => {
         }
       });
 
+      // Carousel animation
+      gsap.to(carouselRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 0.3,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: carouselRef.current,
+          start: "top 85%",
+          end: "bottom 15%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
       // Products animation with 3D effect
       gsap.to(productsRef.current, {
         opacity: 1,
@@ -85,6 +103,7 @@ export const NewArrivals = () => {
         rotationY: 0,
         duration: 0.8,
         stagger: 0.15,
+        delay: 0.6,
         ease: "power3.out",
         scrollTrigger: {
           trigger: productsRef.current[0],
@@ -109,6 +128,11 @@ export const NewArrivals = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Be the first to experience the latest innovations in home appliance technology
           </p>
+        </div>
+        
+        {/* Auto-scrolling carousel */}
+        <div ref={carouselRef} className="mb-16">
+          <AutoScrollCarousel />
         </div>
         
         <div className="responsive-product-grid gap-6">
