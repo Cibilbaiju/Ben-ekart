@@ -40,17 +40,17 @@ export const BestSellers = () => {
 
   if (loading) {
     return (
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-black">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Best Sellers</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Best Sellers</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="bg-white rounded-lg p-4 animate-pulse">
-                <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>
-                <div className="bg-gray-200 h-4 rounded mb-2"></div>
-                <div className="bg-gray-200 h-4 rounded w-2/3"></div>
+              <div key={i} className="bg-gray-900 rounded-lg p-4 animate-pulse">
+                <div className="bg-gray-700 h-48 rounded-lg mb-4"></div>
+                <div className="bg-gray-700 h-4 rounded mb-2"></div>
+                <div className="bg-gray-700 h-4 rounded w-2/3"></div>
               </div>
             ))}
           </div>
@@ -60,11 +60,11 @@ export const BestSellers = () => {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section className="py-16 bg-black">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Best Sellers</h2>
-          <p className="text-gray-600 text-lg">Our most popular products loved by customers</p>
+          <h2 className="text-4xl font-bold text-white mb-4">Best Sellers</h2>
+          <p className="text-gray-400 text-lg">Our most popular products loved by customers</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -77,7 +77,6 @@ export const BestSellers = () => {
               image={product.image_url || "/placeholder.svg"}
               rating={4.5}
               reviews={Math.floor(Math.random() * 200) + 50}
-              category="electronics"
               badge="Bestseller"
             />
           ))}

@@ -4,6 +4,7 @@ import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { NewArrivals } from "@/components/home/NewArrivals";
 import { PayDayOffer } from "@/components/home/PayDayOffer";
 import { BestSellers } from "@/components/home/BestSellers";
+import { BankOffers } from "@/components/home/BankOffers";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 
 const Index = () => {
@@ -32,6 +33,10 @@ const Index = () => {
           </div>
           
           <div className="bg-gray-900 py-12 md:py-16">
+            <BankOffers />
+          </div>
+          
+          <div className="bg-black py-12 md:py-16">
             <WhyChooseUs />
           </div>
         </div>
